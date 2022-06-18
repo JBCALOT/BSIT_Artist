@@ -32,6 +32,7 @@ app.use(
 //routes
 app.use("/api/artist", require("./routes/artist"));
 app.use("/api/producer", require("./routes/producer"));
+app.use("/api/album", require("./routes/album"));
 
 app.use(error);
 cloudinary.config({
