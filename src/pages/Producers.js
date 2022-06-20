@@ -15,8 +15,15 @@ import {
   GetAllProducer,
  } from "../redux/slices/ProducerSlice";
 import EditProd from "./CRUD/EditProducer";
+import Delete from "./CRUD/Delete";
 
 const Producer = () => {
+
+  useEffect(() => {
+    document.title = "BSIT | Producers";
+    return () => {};
+  }, []);
+ 
   function refreshPage() {
       window.location.reload(false);
     };
@@ -37,7 +44,7 @@ const columns = [
     flex: 1,
     headerAlign: "center",
     align: "center",
-    minWidth: 110,
+    minWidth: 150,
   },
   {
     field: "website",
@@ -45,35 +52,35 @@ const columns = [
     flex: 1,
     headerAlign: "center",
     align: "center",
-    minWidth: 110,
+    minWidth: 160,
   },{
     field: "social_media",
     headerName: "Social Media",
     flex: 1,
     headerAlign: "center",
     align: "center",
-    minWidth: 110,
+    minWidth: 160,
   },
   {
     headerName: "Actions",
     flex: 1,
     headerAlign: "center",
     align: "center",
-    minWidth: 90,
+    minWidth: 150,
     renderCell: (cellValues) => {
       return (
         <>
            <EditProd
             id={producer.id}
             data={cellValues.row}
-            //startIcon={<Edit style={{ color: "#ff8a80" }} />}
+            startIcon={<span class="mateiral-icons">edit</span>}
           />
-          {/*<AdminDelete
+          <Delete
             id={cellValues.row._id}
-            name={admin.admin_name}
-            collection="admins"
+            name={producer.producer_name}
+            collection="producers"
             data={cellValues.row} 
-          />*/}
+          />
         </>
       );
     },

@@ -11,7 +11,7 @@ import {
     Select,
     Typography,
 } from "@mui/material";
-import { StyledButton, StyledTextField } from "../../assets/styles";
+import { EditButton, StyledButton, StyledTextField } from "../../assets/styles";
 import { 
   EditArtist,
  } from "../../redux/slices/ArtistSlice";
@@ -24,7 +24,7 @@ const EditArt = ({data, id}) => {
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
-  const { loading, producer, errors, success } = useSelector(
+  const { loading, artist, errors, success } = useSelector(
     (state) => state.artist
   );
   const dispatch = useDispatch();
@@ -55,7 +55,7 @@ const handleSubmit = (e) => {
 
 return(
 
-    <><StyledButton onClick={handleOpen}>Edit</StyledButton>
+    <><EditButton onClick={handleOpen} startIcon={<span class="material-icons">edit</span>}></EditButton>
      <Dialog open={open} onClose={handleClose} maxWidth="md">
         <Box
           sx={{

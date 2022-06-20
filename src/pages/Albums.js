@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import CssBaseline from "@mui/material/CssBaseline";
 import {
     Box, 
+    CardActions, 
     Container,
     Dialog,
     FormControl,
@@ -20,7 +21,8 @@ import {
  } from "../redux/slices/AlbumSlice";
  import {GetAllProducer} from "../redux/slices/ProducerSlice";
  import {GetAllArtist} from "../redux/slices/ArtistSlice";
-//import EditAlbum from "./CRUD/EditAalbum";
+import EditAlbum from "./CRUD/EditAlbum";
+import Delete from "./CRUD/Delete";
 import DateAdapterMoment from "@mui/lab/AdapterMoment";
 import LocalizationProvider from "@mui/lab/LocalizationProvider";
 import DatePicker from "@mui/lab/DatePicker";
@@ -28,6 +30,12 @@ import TimePicker from "@mui/lab/TimePicker";
 import moment from "moment";
 
 const Album = () => {
+
+  useEffect(() => {
+    document.title = "BSIT | Albums";
+    return () => {};
+  }, []);
+
   function refreshPage() {
       window.location.reload(false);
     };
@@ -110,25 +118,26 @@ const columns = [
   },
  
   {
+    field: "action",
     headerName: "Actions",
     flex: 1,
     headerAlign: "center",
     align: "center",
-    minWidth: 90,
+    minWidth: 150,
     renderCell: (cellValues) => {
       return (
         <>
-            {/*<EditArtist
-            id={artist.id}
+            <EditAlbum
+            id={album.id}
             data={cellValues.row}
-            //startIcon={<Edit style={{ color: "#ff8a80" }} />}
+            startIcon={<span class="mateiral-icons">edit</span>}
           />
-         <AdminDelete
+         <Delete
             id={cellValues.row._id}
-            name={admin.admin_name}
-            collection="admins"
+            name={album.album_name}
+            collection="albums"
             data={cellValues.row} 
-          />*/}
+          />
         </>
       );
     },
@@ -204,7 +213,7 @@ return(
             <Box textAlign={"center"}>
             <StyledButton
               onClick={handleOpen}
-              margin="10"
+              //margin="10"
               startIcon={<span class="material-icons">add</span>}
               align="center"
             >

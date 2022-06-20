@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import {
     Button,
     Card,
+    IconButton,
     TextField,
     TableCell,
     TableRow,
@@ -56,4 +57,36 @@ export const StyledLink = styled(Link)({
     background: "white",
     borderRadius: 3,
     color: "#008037" //text-color
+  });
+
+  export const EditButton = styled(Button)({
+    background: "#fff", //button color
+    color: "#008037", //text-color
+    borderColor: "#008037",
+    marginTop: 5,
+    marginBottom: 2,
+    paddingLeft:20,
+    borderRadius:70,
+    
+    "&:hover": {
+      background: "#008037", //button color
+      border: '1px solid',
+      borderColor: "#fff",
+      color:"#fff" },
+  });
+  export const DltButton = styled(Button)({
+    background: "#008037", //button color
+    color: "#000", //text-color
+    marginTop: 5,
+    marginBottom: 2,
+    paddingLeft:20,
+    borderRadius:70,
+    fontSize: "small",
+    
+    
+    "&:hover": {
+      background: "red", //button color
+      border: '1px solid',
+      borderColor: "#fff",
+      color:"#fff" },
   });

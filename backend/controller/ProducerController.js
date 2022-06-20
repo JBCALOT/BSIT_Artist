@@ -16,7 +16,7 @@ exports.store = catchAsyncErrors(async (req, res, next) => {
 //Get all producer
 exports.getAll = catchAsyncErrors(async (req, res, next) => {
  const producer = await Producer.find();
- console.log(producer);
+ //console.log(producer);
     return res.status(200).json({
       success: true,
       producer,          

@@ -7,7 +7,7 @@ import {
     Grid,
     Typography,
 } from "@mui/material";
-import { StyledButton, StyledTextField } from "../../assets/styles";
+import { EditButton, StyledTextField, StyledButton, } from "../../assets/styles";
 import { 
   EditProducer,
  } from "../../redux/slices/ProducerSlice";
@@ -43,7 +43,7 @@ const handleSubmit = (e) => {
 
 return(
 
-    <><StyledButton onClick={handleOpen}>Edit</StyledButton>
+    <><EditButton onClick={handleOpen} startIcon={<span class="material-icons">edit</span>}></EditButton>
     <Dialog open={open} onClose={handleClose} maxWidth="md">
         <Box
             sx={{

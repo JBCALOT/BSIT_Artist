@@ -19,12 +19,19 @@ import {
   GetAllArtist,
  } from "../redux/slices/ArtistSlice";
 import EditArtist from "./CRUD/EditArtist";
+import Delete from "./CRUD/Delete";
 import DateAdapterMoment from "@mui/lab/AdapterMoment";
 import LocalizationProvider from "@mui/lab/LocalizationProvider";
 import DatePicker from "@mui/lab/DatePicker";
 import moment from "moment";
 
 const Artist = () => {
+
+  useEffect(() => {
+    document.title = "BSIT | Artists";
+    return () => {};
+  }, []);
+
   function refreshPage() {
       window.location.reload(false);
     };
@@ -84,25 +91,26 @@ const columns = [
     minWidth: 200,
   },
   {
+    field: "actions",
     headerName: "Actions",
     flex: 1,
     headerAlign: "center",
     align: "center",
-    minWidth: 90,
+    minWidth: 150,
     renderCell: (cellValues) => {
       return (
         <>
            <EditArtist
             id={artist.id}
             data={cellValues.row}
-            //startIcon={<Edit style={{ color: "#ff8a80" }} />}
+            startIcon={<span class="mateiral-icons">edit</span>}
           />
-          {/*<AdminDelete
+         <Delete
             id={cellValues.row._id}
-            name={admin.admin_name}
-            collection="admins"
+            name={artist.f_name}
+            collection="artist"
             data={cellValues.row} 
-          />*/}
+          />
         </>
       );
     },
@@ -272,7 +280,7 @@ return(
                 >
                   <MenuItem value="Male">Male</MenuItem>
                   <MenuItem value="Female">Female</MenuItem>
-                  <MenuItem value="Female">Other</MenuItem>
+                  <MenuItem value="Other">Other</MenuItem>
                 </Select>
               </FormControl>
               </Grid>

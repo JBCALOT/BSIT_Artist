@@ -21,7 +21,7 @@ const f = require("../assets/5.svg").default;
 
 const Dashboard = () => {
   useEffect(() => {
-    document.title = "BSIT | Album";
+    document.title = "BSIT | Home";
     return () => {};
   }, []);
 
@@ -64,7 +64,7 @@ const Dashboard = () => {
 ];
 
 const dispatch = useDispatch();
-  
+
 return (
 
 <Box  sx={{
