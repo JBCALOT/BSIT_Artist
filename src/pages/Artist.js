@@ -107,8 +107,8 @@ const columns = [
           />
          <Delete
             id={cellValues.row._id}
-            name={artist.f_name}
-            collection="artist"
+            name={cellValues.row.f_name + cellValues.row.l_name }
+            collection="artists"
             data={cellValues.row} 
           />
         </>

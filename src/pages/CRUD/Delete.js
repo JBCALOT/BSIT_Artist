@@ -12,6 +12,7 @@ import { useNavigate } from "react-router-dom";
 import { DeleteAlbum } from "../../redux/slices/AlbumSlice";
 import { DeleteArtist } from "../../redux/slices/ArtistSlice";
 import { DeleteProducer } from "../../redux/slices/ProducerSlice";
+import { DeleteTrack } from "../../redux/slices/TrackSlice";
 import { DltButton } from "../../assets/styles";
 
 const Delete = ({ id, name, collection, ...rest }) => {
@@ -28,24 +29,25 @@ const Delete = ({ id, name, collection, ...rest }) => {
   
     const handleYes = () => {
       switch (collection) {
-        case "producer":
+        case "producers":
           dispatch(DeleteProducer({ id: id }));
           navigate("/producer");
           break;
-        case "artist":
+        case "artists":
           dispatch(DeleteArtist({ id: id }));
           navigate("/artist");
           break;
-        case "album":
+        case "albums":
           dispatch(DeleteAlbum({ id: id }));
           navigate("/album");
           break;
-       /*  case "track":
-          dispatch(DeletePetVaccineThunk({ id: id }));
+        case "tracks":
+          dispatch(DeleteTrack({ id: id }));
+          navigate("/track");
           break;
-        case "rating":
-          dispatch(DeleteAnnThunk({ id: id }));
-          navigate("/admin/announcements");
+        /* case "rating":
+          dispatch(DeleteRating({ id: id }));
+          navigate("/rating");
           break; */
   
         default:

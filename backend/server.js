@@ -33,6 +33,8 @@ app.use(
 app.use("/api/artist", require("./routes/artist"));
 app.use("/api/producer", require("./routes/producer"));
 app.use("/api/album", require("./routes/album"));
+app.use("/api/track", require("./routes/track"));
+
 
 app.use(error);
 cloudinary.config({

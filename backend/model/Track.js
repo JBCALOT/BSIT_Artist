@@ -6,23 +6,29 @@ const trackSchema = mongoose.Schema({
         ref: "Album",
         required: [true, "Please Enter Album"],
       },
-    artist_name: {
+   /*  artist_name: {
         type: mongoose.Schema.ObjectId,
         ref: "Artist",
-        required: [true, "Please Enter Artist name"],
-      },  
+        required: [true, "Please Enter Artist Name"],
+      },  */ 
     track_name: {
         type: String,
-        required: [true, "Please Enter Title"],
+        required: [true, "Please Enter Song Title"],
       },
     genre: {
         type: String,
-        required: [true, "Please Enter Genre"],
+        required: [true, "Please Enter Song Genre"],
       },
     duration: {
-        type: Number,
-        required: [true, "Please Enter Song Duration"],
+      minutes:{
+        type: String,
+        required: true,
       },
+      seconds:{
+        type: String,
+        required: true,
+      },
+    }
 },{timestamps: true}
 );
 

@@ -1,11 +1,11 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
-export const GetAllAlbum = createAsyncThunk(
-    "album/all",
+export const GetAllTracks = createAsyncThunk(
+    "track/all",
     async (obj, { rejectWithValue }) => {
       try {
-        const response = await axios.get(`${process.env.REACT_APP_API_HOST}api/album/`,obj,);
+        const response = await axios.get(`${process.env.REACT_APP_API_HOST}api/track/`,obj,);
         return response.data;
       } catch (error) {
         return rejectWithValue(error.response.data.message);
@@ -13,12 +13,12 @@ export const GetAllAlbum = createAsyncThunk(
     }
   );
 
-  export const AddAlbum = createAsyncThunk(
-    "album/add",
+  export const AddTrack = createAsyncThunk(
+    "track/add",
     async (obj, { rejectWithValue }) => {
       try {
         const response = await axios.post(
-          `${process.env.REACT_APP_API_HOST}api/album/store`,obj.data,);
+          `${process.env.REACT_APP_API_HOST}api/track/store`,obj.data,);
         return response.data;
       } catch (error) {
         return rejectWithValue(error.response.data.message);
@@ -26,12 +26,12 @@ export const GetAllAlbum = createAsyncThunk(
     }
   );
   
-  export const EditAlbum = createAsyncThunk(
-    "album/edit",
+  export const EditTrack = createAsyncThunk(
+    "track/edit",
     async (obj, { rejectWithValue }) => {
       try {
         const response = await axios.patch(
-          `${process.env.REACT_APP_API_HOST}api/album/update/${obj.id}`,
+          `${process.env.REACT_APP_API_HOST}api/track/update/${obj.id}`,
           obj.data,);
         return response.data;
       } catch (error) {
@@ -40,12 +40,12 @@ export const GetAllAlbum = createAsyncThunk(
     }
   );
 
-  export const DeleteAlbum = createAsyncThunk(
-    "album/delete",
+  export const DeleteTrack = createAsyncThunk(
+    "track/delete",
     async (obj, { rejectWithValue }) => {
       try {
         const response = await axios.delete(
-          `${process.env.REACT_APP_API_HOST}api/album/dlt/${obj.id}`,);
+          `${process.env.REACT_APP_API_HOST}api/track/dlt/${obj.id}`,);
         return response.data;
       } catch (error) {
         return rejectWithValue(error.response.data.message);
@@ -54,15 +54,15 @@ export const GetAllAlbum = createAsyncThunk(
   );
 
   const initialState = {
-    album: null,
+    track: null,
     loading: false,
     //input_errors: null,
     errors: null,
     success: null,
   };
 
-  const AlbumSlice = createSlice({
-    name: "album",
+  const TrackSlice = createSlice({
+    name: "track",
     initialState,
     reducers: {
       clearError: (state) => {
@@ -73,66 +73,67 @@ export const GetAllAlbum = createAsyncThunk(
       },
     },
     extraReducers: {
-      [GetAllAlbum.pending]: (state) => {
+      [GetAllTracks.pending]: (state) => {
         state.loading = true;
       },
-      [GetAllAlbum.fulfilled]: (state, action) => {
+      [GetAllTracks.fulfilled]: (state, action) => {
         state.loading = false;
-        state.album = action.payload.album;
+        state.track = action.payload.track;
       },
-      [GetAllAlbum.rejected]: (state, action) => {
+      [GetAllTracks.rejected]: (state, action) => {
         state.loading = false;
         state.errors = action.payload;
       },
-      [AddAlbum.pending]: (state) => {
+      [AddTrack.pending]: (state) => {
         state.loading = true;
       },
-      [AddAlbum.fulfilled]: (state, action) => {
+      [AddTrack.fulfilled]: (state, action) => {
         state.loading = false;
         state.success = action.payload.success;
         state.errors = null;
-        state.album = [action.payload.album, ...state.album];
+        state.track = action.payload.track;
+        
       },
-      [AddAlbum.rejected]: (state, action) => {
+      [AddTrack.rejected]: (state, action) => {
         state.loading = false;
         state.success = null;
         state.errors = action.payload;
       },
-      [EditAlbum.pending]: (state) => {
+      [EditTrack.pending]: (state) => {
         state.loading = true;
       },
-      [EditAlbum.fulfilled]: (state, action) => {
+      [EditTrack.fulfilled]: (state, action) => {
         state.loading = false;
         state.success = action.payload.message;
         state.errors = null;
-        state.album = action.payload.album;
+        state.track = action.payload.track;
       },
-      [EditAlbum.rejected]: (state, action) => {
+      [EditTrack.rejected]: (state, action) => {
         state.loading = false;
         state.success = null;
         state.errors = action.payload;
       },
 
-      [DeleteAlbum.pending]: (state) => {
+      [DeleteTrack.pending]: (state) => {
         state.loading = true;
       },
-      [DeleteAlbum.fulfilled]: (state, action) => {
-        const new_album = state.album;
-        new_album.splice(
-          new_album.findIndex((a) => a._id === action.payload.id),
+      [DeleteTrack.fulfilled]: (state, action) => {
+        const new_track = state.track;
+        new_track.splice(
+          new_track.findIndex((t) => t._id === action.payload.id),
           1
         );
         state.loading = false;
         state.success = action.payload.success;
-        state.album = new_album;
+        state.track = new_track;
         state.errors = null;
       },
-      [DeleteAlbum.rejected]: (state, action) => {
+      [DeleteTrack.rejected]: (state, action) => {
         state.loading = false;
         state.succes = null;
         state.errors = action.payload;
       },
     },
 });
-export const { clearError, clearSuccess } = AlbumSlice.actions;
-export default AlbumSlice.reducer;
+export const { clearError, clearSuccess } = TrackSlice.actions;
+export default TrackSlice.reducer;

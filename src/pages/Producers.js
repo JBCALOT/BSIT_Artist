@@ -77,7 +77,7 @@ const columns = [
           />
           <Delete
             id={cellValues.row._id}
-            name={producer.producer_name}
+            name={cellValues.row.producer_name}
             collection="producers"
             data={cellValues.row} 
           />

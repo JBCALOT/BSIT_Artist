@@ -25,10 +25,6 @@ import TimePicker from "@mui/lab/TimePicker";
 import moment from "moment";
 
 const EditAlbumm = ({data, id}) => {
-  function refreshPage() {
-      window.location.reload(false);
-    };
-
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
