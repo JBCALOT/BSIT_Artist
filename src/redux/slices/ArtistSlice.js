@@ -53,6 +53,20 @@ export const GetAllArtist = createAsyncThunk(
     }
   );
 
+  export const GetArtistDetails = createAsyncThunk(
+    "artist/details",
+    async (obj, { rejectWithValue }) => {
+      try {
+        const response = await axios.get(
+          `${process.env.REACT_APP_API_HOST}api/artist/${obj.id}`
+        );
+        return response.data;
+      } catch (error) {
+        return rejectWithValue(error.response.data.message);
+      }
+    }
+  );
+
   const initialState = {
     artist: null,
     loading: false,
@@ -129,7 +143,18 @@ export const GetAllArtist = createAsyncThunk(
       },
       [DeleteArtist.rejected]: (state, action) => {
         state.loading = false;
-        state.succes = null;
+        state.success = null;
+        state.errors = action.payload;
+      },
+      [GetArtistDetails.pending]: (state) => {
+        state.loading = true;
+      },
+      [GetArtistDetails.fulfilled]: (state, action) => {
+        state.loading = false;
+        state.artist = action.payload.artist;
+      },
+      [GetArtistDetails.rejected]: (state, action) => {
+        state.loading = false;
         state.errors = action.payload;
       },
     },

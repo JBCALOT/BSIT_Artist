@@ -6,6 +6,8 @@ import {
     FormControl,
     Dialog,
     Grid,
+    ImageList,
+    ImageListItem,
     InputLabel,
     MenuItem,
     Select,
@@ -21,6 +23,9 @@ import {
  import moment from "moment";
 
 const EditArt = ({data, id}) => {
+  const [imagePreview, setimagePreview] = useState(data.image);
+  const [imageChanged, setimageChanged] = useState(false);
+  const [image, setImages] = useState([]);
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -41,6 +46,24 @@ const handleChange = (e) => {
   setvalues({ ...values, [e.target.name]: e.target.value });
 };
 
+const onChange = (e) => {
+  const files = Array.from(e.target.files);
+ setimageChanged(true);
+ setimagePreview([]);
+ setImages([]);
+  //console.log(files[0]);
+  files.forEach((file) => {
+    const reader = new FileReader();
+    reader.onload = () => {
+      if (reader.readyState === 2) {
+        setimagePreview((oldArray) => [...oldArray, reader.result]);
+        setImages((oldArray) => [...oldArray, reader.result]);
+      }
+    };
+    reader.readAsDataURL(e.target.files[0]);
+  });
+};
+
 const handleSubmit = (e) => {
   e.preventDefault();
   const formData = new FormData();
@@ -49,13 +72,19 @@ const handleSubmit = (e) => {
   formData.append("gender", values.gender);
   formData.append("birthday", values.birthday);
   formData.append("info", values.info);
+  if (imageChanged) {
+  image.forEach((image) => {
+    formData.append("image", image);
+  });
+}
   dispatch(EditArtist({data: formData, id: data._id}));
   setOpen(false);
-};
+}; 
 
 return(
 
     <><EditButton onClick={handleOpen} startIcon={<span class="material-icons">edit</span>}></EditButton>
+     
      <Dialog open={open} onClose={handleClose} maxWidth="md">
         <Box
           sx={{
@@ -165,7 +194,33 @@ return(
                   onChange={handleChange}
                   value={values.info}
                 />
-              </Grid>          
+              </Grid>
+
+              <Grid item xs={12}>
+                <StyledButton variant="contained" component="label">
+                  <input
+                    type="file"
+                    name="image"
+                    accept="images/*"
+                    multiple
+                    onChange={onChange}
+                    hidden
+                  />
+                  Update Artist Image
+                </StyledButton>
+              </Grid>
+              <ImageList cols={8} rowHeight={100}>
+              {imagePreview.map((img) => (
+                <ImageListItem key={img.public_id ? img.public_id : img}>
+                  <img
+                    src={img.url ? img.url : img}
+                    key={img.public_id ? img.public_id : img}
+                    alt="artist"
+                    loading="lazy"
+                  />
+                </ImageListItem>
+              ))}
+            </ImageList>          
             </Grid>
 
             <Box

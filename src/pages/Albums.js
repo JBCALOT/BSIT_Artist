@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import CssBaseline from "@mui/material/CssBaseline";
 import {
+  Avatar,
     Box, 
     CardActions, 
     Container,
@@ -9,18 +10,21 @@ import {
     FormControl,
     Grid,
     InputLabel,
+    ImageList,
+    ImageListItem,
     MenuItem,
     Select,
     Typography,
 } from "@mui/material";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
-import { StyledButton, StyledTextField } from "../assets/styles";
+import { StyledButton, StyledTextField, StyledLink, } from "../assets/styles";
 import { 
   AddAlbum,
   GetAllAlbum,
  } from "../redux/slices/AlbumSlice";
  import {GetAllProducer} from "../redux/slices/ProducerSlice";
  import {GetAllArtist} from "../redux/slices/ArtistSlice";
+ import ArtistInDetails from "./CRUD/ViewArtistInAlbum";
 import EditAlbum from "./CRUD/EditAlbum";
 import Delete from "./CRUD/Delete";
 import DateAdapterMoment from "@mui/lab/AdapterMoment";
@@ -39,7 +43,8 @@ const Album = () => {
   function refreshPage() {
       window.location.reload(false);
     };
-
+  const [imagePreview, setimagePreview] = useState([]);
+  const [image, setImages] = useState([]);
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -61,6 +66,20 @@ const secs = ["01", "02", "03", "04", "05","06","07","08","09","10","11", "12", 
 
 //Datagrid
 const columns = [
+  {
+    field: "image",
+    headerName: "Cover",
+    flex: 1,
+    headerAlign: "center",
+    align: "center",
+    minWidth: 80
+    ,
+    renderCell: (cellValues) => {
+    return(
+    <Avatar id={album.id} src={cellValues.row.image[0].url}/>
+    );
+  }
+  },
   {
     field: "album_name",
     headerName: "Album Name",
@@ -88,11 +107,15 @@ const columns = [
     headerAlign: "center",
     align: "center",
     minWidth: 200,
-    valueGetter: (cellValues) => {
-      return (
-        cellValues.row.artist[0].f_name +
-        " " +
-        cellValues.row.artist[0].l_name
+    renderCell: (cellValues) => {
+        return (
+          <><ArtistInDetails
+            id={cellValues.row._id}
+            data={cellValues.row}
+            startIcon={<span class="material-icons-round">info</span>}/>
+            <Typography>{cellValues.row.artist[0].f_name + " " + cellValues.row.artist[0].l_name}</Typography></>
+          //<StyledButton component={StyledLink} to={"/"}>{cellValues.row.artist[0].f_name +" "+cellValues.row.artist[0].l_name}</StyledButton >
+          //<StyledLink to={"/"}>{cellValues.row.artist[0].f_name +" "+cellValues.row.artist[0].l_name}</StyledLink>
       );
     },
     sortComparator: (v1, v2) => v1.localeCompare(v2),
@@ -167,6 +190,24 @@ const handleChange = (e) => {
   setvalues({ ...values, [e.target.name]: e.target.value });
 };
 
+const onChange = (e) => {
+  //console.log(e.target.files);
+  const files = Array.from(e.target.files);
+  setimagePreview([]);
+  setImages([]);
+  //console.log(files[0]);
+  files.forEach((file) => {
+    const reader = new FileReader();
+    reader.onload = () => {
+      if (reader.readyState === 2) {
+        setimagePreview((oldArray) => [...oldArray, reader.result]);
+        setImages((oldArray) => [...oldArray, reader.result]);
+      }
+    };
+    reader.readAsDataURL(file);
+  });
+};
+
 const handleSubmit = (e) => {
   e.preventDefault();
   const formData = new FormData();
@@ -175,6 +216,10 @@ const handleSubmit = (e) => {
   formData.append("artist", values.artist);
   formData.append("duration", values.duration);
   formData.append("date_released", values.date_released);
+  image.forEach((image) => {
+    //  * Use append() here instead of set(). in order not replace the current value of the image...
+    formData.append("image", image);
+  });
   dispatch(AddAlbum({data: formData}));
   refreshPage();
   setOpen(false);
@@ -394,9 +439,34 @@ return(
                   )}
                 />
               </LocalizationProvider>
-            </Grid>        
             </Grid>
+            <Grid item xs={12}>
+                <StyledButton variant="contained" component="label">
+                  <input
+                    type="file"
+                    name="image"
+                    accept="images/*"
+                    multiple
+                    onChange={onChange}
+                    hidden
+                  />
+                  Upload Artist Image
+                </StyledButton>
+              </Grid>
+              <ImageList cols={8} rowHeight={100}>
+              {imagePreview.map((img) => (
+                <ImageListItem key={img}>
+                  <img
+                    src={img}
+                    key={img}
+                    alt="artist"
+                    loading="lazy"
+                  />
+                </ImageListItem>
+              ))}
+            </ImageList>
 
+            </Grid>
             <Box
               sx={{
                 display: "flex",

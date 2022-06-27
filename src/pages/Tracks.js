@@ -1,11 +1,15 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
 import CssBaseline from "@mui/material/CssBaseline";
 import {
-    Box, 
+    Box,
+    Card,
+    CardMedia, 
     CardActions, 
     Container,
     Dialog,
+    DialogTitle,
     FormControl,
     Grid,
     InputLabel,
@@ -14,12 +18,17 @@ import {
     Typography,
 } from "@mui/material";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
-import { StyledButton, StyledLink, StyledTextField } from "../assets/styles";
+import { StyledButton, StyledTextField } from "../assets/styles";
 import { 
   AddTrack,
   GetAllTracks,
  } from "../redux/slices/TrackSlice";
  import {GetAllAlbum} from "../redux/slices/AlbumSlice";
+ import {GetAllArtist, GetArtistDetails, } from "../redux/slices/ArtistSlice";
+
+ import ArtistInDetails from "./CRUD/ViewArtistInTrack";
+ import AlbumInDetails from "./CRUD/ViewAlbumInTrack";
+
 import EditTrack from "./CRUD/EditTrack";
 import Delete from "./CRUD/Delete";
 import DateAdapterMoment from "@mui/lab/AdapterMoment";
@@ -41,8 +50,13 @@ const Track = () => {
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+  const params = useParams();
+
   const { loading, track, errors, success } = useSelector(
     (state) => state.track
+  );
+  const { artist } = useSelector(
+    (state) => state.artist
   );
   
   const {album} = useSelector(
@@ -66,26 +80,46 @@ const columns = [
     headerAlign: "center",
     align: "center",
     minWidth: 200,
-    valueGetter: (cellValues) => {
+    /* valueGetter: (cellValues) => {
       return cellValues.row.album[0].album_name;
-    },
+    },*/
+    renderCell: (cellValues) => {
+      return (
+       <><AlbumInDetails
+          id={cellValues.row.id}
+          data={cellValues.row}
+          startIcon={<span class="material-icons-round">info</span>}/>
+          <Typography>{cellValues.row.album[0].album_name}</Typography>
+          </>
+     );
+      }, 
     sortComparator: (v1, v2) => v1.localeCompare(v2),
   },
-  {
+   {
     field: "artist_name",
     headerName: "Artist",
     flex: 1,
     headerAlign: "center",
     align: "center",
     minWidth: 200,
-    valueGetter: (cellValues) => {
-      return (cellValues.row.album[0].artist); //todo: Link to artist profile
-    },
-    sortComparator: (v1, v2) => v1.localeCompare(v2),
+    renderCell: (cellValues) => {
+      return (
+       <><ArtistInDetails
+          id={cellValues.row.id}
+          data={cellValues.row}
+          startIcon={<span class="material-icons-round">info</span>}/>
+         <Typography>{cellValues.row.artist[0].f_name + " " + cellValues.row.artist[0].l_name}</Typography></>
+        //<StyledButton component={StyledLink} to={`/artist/${artist._id}`}>artist</StyledButton >
+        //<StyledButton onClick={artistInfo}>artist</StyledButton >
+        //<ArtistInDetails params={`${cellValues.row.id}`}/>
+        //<StyledLink to={`/artist/${artist._id}`}>artist</StyledLink>
+    );
   },
+    sortComparator: (v1, v2) => v1.localeCompare(v2),
+  }, 
   {
     field: "track_name",
-    headerName: "Title",
+    headerName: "Song Title",
     flex: 1,
     headerAlign: "center",
     align: "center",
@@ -145,14 +179,15 @@ const handleRowClick = (param, e) => {
   e.stopPropagation();
 };
 
-/* const time=(newTime) => {
-  setvalues({...values, duration: newTime})
-  //const { hours, minutes, seconds } = newTime;
-  return;
- }; */
+/* const artistInfo = () => {
+  infoOpen(true);
+  <ArtistInDetails artist={`/artist/${cellValues.row._id}`}/>
+};
+ */
 
 const [values, setvalues] = useState({
   album: "",
+  artist_name: "",
   track_name: "",
   genre: "",
   minutes: "",
@@ -167,6 +202,8 @@ const handleSubmit = (e) => {
   e.preventDefault();
   const formData = new FormData();
   formData.append("album", values.album);
+  formData.append("artist_name", values.artist_name);
+
   formData.append("track_name", values.track_name);
   formData.append("genre", values.genre);
   formData.append("duration.minutes", values.minutes);
@@ -180,10 +217,10 @@ useEffect(() => {
   return () => {};
 }, [dispatch]);
 
-/* useEffect(() => {
+ useEffect(() => {
   dispatch(GetAllArtist());
   return () => {};
-}, [dispatch]); */
+}, [dispatch]);
 
 useEffect(() => {
   dispatch(GetAllTracks());
@@ -279,7 +316,7 @@ return(
             <Grid container spacing={2}>
 
             <Grid item xs={12} sm={12} md={6}>
-                  <FormControl
+                <FormControl
                     required
                     fullWidth
                     size="small"
@@ -301,7 +338,31 @@ return(
                         ))}
                     </Select>
                   </FormControl>
-                </Grid>              
+                </Grid> 
+                <Grid item xs={12} sm={12} md={6}>
+                  <FormControl
+                    required
+                    fullWidth
+                    size="small"
+                    sx={{ backgroundColor: "white" }}
+                  >
+                    <InputLabel>Artist</InputLabel>
+                    <Select
+                      label="Artist"
+                      name="artist_name"
+                      id="artist_name"
+                      onChange={handleChange}
+                    >
+                     {!loading &&
+                        artist &&
+                        artist.map((a) => (
+                          <MenuItem value={a._id} key={a}>
+                            {a.f_name + " " + a.l_name}
+                          </MenuItem>
+                        ))}
+                    </Select>
+                  </FormControl>
+                </Grid>                  
 
                 <Grid item xs={12} sm={12} md={6}>
                 <StyledTextField
@@ -425,7 +486,6 @@ return(
         </Box>
       </Dialog>
       <br />
-
 </Container>
 </Box>
 );

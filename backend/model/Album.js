@@ -23,7 +23,19 @@ const albumSchema = mongoose.Schema({
         type: String,
         required: true,
         //default: Date.now,
-      }, 
+      },
+      image: [
+        {
+          public_id: {
+            type: String,
+            required: [true, "Public Id is required"],
+          },
+          url: {
+            type: String,
+            required: [true, "Please provide the url"],
+          },
+        },
+      ],
 },{timestamps: true}
 );
 

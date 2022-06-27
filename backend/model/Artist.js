@@ -21,6 +21,18 @@ const artistSchema = mongoose.Schema({
         type: String,
         required: [true, "Please Enter Artist's Additional Info"],
       },
+      image: [
+        {
+          public_id: {
+            type: String,
+            required: [true, "Public Id is required"],
+          },
+          url: {
+            type: String,
+            required: [true, "Please provide the url"],
+          },
+        },
+      ],
 
 },{timestamps: true}
 

@@ -6,11 +6,11 @@ const trackSchema = mongoose.Schema({
         ref: "Album",
         required: [true, "Please Enter Album"],
       },
-   /*  artist_name: {
+     artist_name: {
         type: mongoose.Schema.ObjectId,
         ref: "Artist",
         required: [true, "Please Enter Artist Name"],
-      },  */ 
+      }, 
     track_name: {
         type: String,
         required: [true, "Please Enter Song Title"],

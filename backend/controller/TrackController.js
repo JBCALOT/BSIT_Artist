@@ -45,7 +45,17 @@ exports.getAll = catchAsyncErrors(async (req, res, next) => {
               as: "album",
             },
           },
-      ]);
+           {
+            $lookup: {
+              from: "artists",
+              localField: "artist_name",
+              foreignField: "_id",
+              as: "artist",
+            },
+          }, 
+      ]);    
+      console.log(track);
+
     return res.status(200).json({
       success: req.body.status? req.body.status.success:true,
       message: req.body.status? req.body.status.message:null,

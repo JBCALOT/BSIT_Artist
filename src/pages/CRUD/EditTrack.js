@@ -17,6 +17,8 @@ import {
   EditTrack,
  } from "../../redux/slices/TrackSlice";
 import {GetAllAlbum} from "../../redux/slices/AlbumSlice";
+import {GetAllArtist} from "../../redux/slices/ArtistSlice";
+
 
 const EditSongTrack = ({data, id}) => {
 const [open, setOpen] = useState(false);
@@ -24,6 +26,8 @@ const handleOpen = () => setOpen(true);
 const handleClose = () => setOpen(false);
 const { loading, track, errors, success } = useSelector((state) => state.track);
 const {album} = useSelector((state) => state.album);
+const {artist} = useSelector((state) => state.artist);
+
   
 const dispatch = useDispatch();
   
@@ -35,6 +39,7 @@ const dispatch = useDispatch();
   
   const [values, setvalues] = useState({
     album: data.album[0]._id,
+    artist_name: artist[0]._id,
     track_name: data.track_name,
     genre: data.genre,
     minutes: data.duration.minutes,
@@ -49,6 +54,7 @@ const dispatch = useDispatch();
     e.preventDefault();
     const formData = new FormData();
     formData.append("album", values.album);
+    formData.append("artist_name", values.artist_name);
     formData.append("track_name", values.track_name);
     formData.append("genre", values.genre);
     formData.append("duration.minutes", values.minutes);
@@ -59,6 +65,10 @@ const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(GetAllAlbum());
+    return () => {};
+  }, [dispatch]);
+  useEffect(() => {
+    dispatch(GetAllArtist());
     return () => {};
   }, [dispatch]);
 
@@ -112,7 +122,33 @@ const dispatch = useDispatch();
                     ))}
                 </Select>
             </FormControl>
-            </Grid>               
+            </Grid>
+
+            <Grid item xs={12} sm={12} md={6}>
+            <FormControl
+              required
+              fullWidth
+              size="small"
+              sx={{ backgroundColor: "white" }}
+            >
+              <InputLabel>Artist</InputLabel>
+              <Select
+                label="Artist"
+                name="artist"
+                id="artist"
+                onChange={handleChange}
+                value={values.artist_name}
+              >
+                {!loading &&
+                  artist &&
+                  artist.map((a) => (
+                    <MenuItem value={a._id} key={a}>
+                      {a.f_name + " " + a.l_name}
+                    </MenuItem>
+                  ))}
+              </Select>
+            </FormControl>
+          </Grid>
 
             <Grid item xs={12} sm={12} md={6}>
             <StyledTextField

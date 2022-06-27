@@ -7,6 +7,8 @@ import {
     Dialog,
     FormControl,
     Grid,
+    ImageList,
+    ImageListItem,
     InputLabel,
     MenuItem,
     Select,
@@ -19,6 +21,7 @@ import {
   GetAllArtist,
  } from "../redux/slices/ArtistSlice";
 import EditArtist from "./CRUD/EditArtist";
+import ArtistDetails from "./CRUD/ViewArtistDetails";
 import Delete from "./CRUD/Delete";
 import DateAdapterMoment from "@mui/lab/AdapterMoment";
 import LocalizationProvider from "@mui/lab/LocalizationProvider";
@@ -26,7 +29,6 @@ import DatePicker from "@mui/lab/DatePicker";
 import moment from "moment";
 
 const Artist = () => {
-
   useEffect(() => {
     document.title = "BSIT | Artists";
     return () => {};
@@ -35,7 +37,8 @@ const Artist = () => {
   function refreshPage() {
       window.location.reload(false);
     };
-
+  const [imagePreview, setimagePreview] = useState([]);
+  const [image, setImages] = useState([]);
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -96,21 +99,26 @@ const columns = [
     flex: 1,
     headerAlign: "center",
     align: "center",
-    minWidth: 150,
+    minWidth: 200,
     renderCell: (cellValues) => {
       return (
         <>
-           <EditArtist
-            id={artist.id}
-            data={cellValues.row}
-            startIcon={<span class="mateiral-icons">edit</span>}
-          />
-         <Delete
-            id={cellValues.row._id}
-            name={cellValues.row.f_name + cellValues.row.l_name }
-            collection="artists"
-            data={cellValues.row} 
-          />
+        <ArtistDetails
+          id={cellValues.row._id}
+          data={cellValues.row}
+          startIcon={<span class="mateiral-icons">remove_red_eye</span>}
+        />
+        <EditArtist
+          id={artist.id}
+          data={cellValues.row}
+          startIcon={<span class="mateiral-icons">edit</span>}
+        />
+        <Delete
+          id={cellValues.row._id}
+          name={cellValues.row.f_name + cellValues.row.l_name }
+          collection="artists"
+          data={cellValues.row} 
+        />
         </>
       );
     },
@@ -136,6 +144,24 @@ const handleChange = (e) => {
   setvalues({ ...values, [e.target.name]: e.target.value });
 };
 
+const onChange = (e) => {
+  //console.log(e.target.files);
+  const files = Array.from(e.target.files);
+  setimagePreview([]);
+  setImages([]);
+  //console.log(files[0]);
+  files.forEach((file) => {
+    const reader = new FileReader();
+    reader.onload = () => {
+      if (reader.readyState === 2) {
+        setimagePreview((oldArray) => [...oldArray, reader.result]);
+        setImages((oldArray) => [...oldArray, reader.result]);
+      }
+    };
+    reader.readAsDataURL(file);
+  });
+};
+
 const handleSubmit = (e) => {
   e.preventDefault();
   const formData = new FormData();
@@ -144,8 +170,11 @@ const handleSubmit = (e) => {
   formData.append("gender", values.gender);
   formData.append("birthday", values.birthday);
   formData.append("info", values.info);
+  image.forEach((image) => {
+    //  * Use append() here instead of set(). in order not replace the current value of the image...
+    formData.append("image", image);
+  });
   dispatch(AddArtist({data: formData}));
-  //refreshPage();
   setOpen(false);
 };
 
@@ -325,9 +354,35 @@ return(
                   size="small"
                   onChange={handleChange}
                 />
-              </Grid>          
-            </Grid>
+              </Grid>
 
+              <Grid item xs={12}>
+                <StyledButton variant="contained" component="label">
+                  <input
+                    type="file"
+                    name="image"
+                    accept="images/*"
+                    multiple
+                    onChange={onChange}
+                    hidden
+                  />
+                  Upload Artist Image
+                </StyledButton>
+              </Grid>
+              <ImageList cols={8} rowHeight={100}>
+              {imagePreview.map((img) => (
+                <ImageListItem key={img}>
+                  <img
+                    src={img}
+                    key={img}
+                    alt="artist"
+                    loading="lazy"
+                  />
+                </ImageListItem>
+              ))}
+            </ImageList>
+
+            </Grid>
             <Box
               sx={{
                 display: "flex",

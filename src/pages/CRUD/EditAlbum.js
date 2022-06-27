@@ -8,6 +8,8 @@ import {
     Grid,
     IconButton,
     InputLabel,
+    ImageList,
+    ImageListItem,
     MenuItem,
     Select,
     Typography,
@@ -25,6 +27,9 @@ import TimePicker from "@mui/lab/TimePicker";
 import moment from "moment";
 
 const EditAlbumm = ({data, id}) => {
+  const [imagePreview, setimagePreview] = useState(data.image);
+  const [imageChanged, setimageChanged] = useState(false);
+  const [image, setImages] = useState([]);
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -58,10 +63,31 @@ const handleSubmit = (e) => {
   formData.append("artist", values.artist);
   formData.append("duration", values.duration);
   formData.append("date_released", values.date_released);
+  if (imageChanged) {
+    image.forEach((image) => {
+      formData.append("image", image);
+    });
+  }
   dispatch(EditAlbum({data: formData, id: data._id}));
-  //refreshPage();
   setOpen(false);
-  //console.log(formData);
+};
+
+const onChange = (e) => {
+  const files = Array.from(e.target.files);
+ setimageChanged(true);
+ setimagePreview([]);
+ setImages([]);
+  //console.log(files[0]);
+  files.forEach((file) => {
+    const reader = new FileReader();
+    reader.onload = () => {
+      if (reader.readyState === 2) {
+        setimagePreview((oldArray) => [...oldArray, reader.result]);
+        setImages((oldArray) => [...oldArray, reader.result]);
+      }
+    };
+    reader.readAsDataURL(e.target.files[0]);
+  });
 };
 
 
@@ -208,6 +234,33 @@ return(
                 )} />
             </LocalizationProvider>
           </Grid>
+
+          <Grid item xs={12}>
+                <StyledButton variant="contained" component="label">
+                  <input
+                    type="file"
+                    name="image"
+                    accept="images/*"
+                    multiple
+                    onChange={onChange}
+                    hidden
+                  />
+                  Update Artist Image
+                </StyledButton>
+              </Grid>
+              <ImageList cols={8} rowHeight={100}>
+              {imagePreview.map((img) => (
+                <ImageListItem key={img.public_id ? img.public_id : img}>
+                  <img
+                    src={img.url ? img.url : img}
+                    key={img.public_id ? img.public_id : img}
+                    alt="artist"
+                    loading="lazy"
+                  />
+                </ImageListItem>
+              ))}
+            </ImageList>     
+
         </Grid>
 
         <Box

@@ -81,12 +81,38 @@ export const StyledLink = styled(Link)({
     marginBottom: 2,
     paddingLeft:20,
     borderRadius:70,
-    fontSize: "small",
-    
     
     "&:hover": {
       background: "red", //button color
       border: '1px solid',
       borderColor: "#fff",
       color:"#fff" },
+  });
+  export const ViewButton = styled(Button)({
+    background: 0, //button color
+    color: "#fff", //text-color
+    marginTop: 5,
+    marginBottom: 2,
+    paddingLeft:20,
+    borderRadius:70,
+    border: '1px solid',
+      borderColor: "#fff",
+    
+    "&:hover": {
+      background: "#fff", //button color
+      border: '1px solid',
+      borderColor: "#fff",
+      color:"#008037" },
+  });
+
+  export const ViewArtist  = styled(Button)({
+    background: 0, //button color
+    color: "#fff", //text-color
+    marginTop: 5,
+    marginBottom: 2,
+    marginRight: -20,
+    
+    "&:hover": {
+      background: 0, //button color
+      color:"#008037" },
   });
