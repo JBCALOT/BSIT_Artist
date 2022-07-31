@@ -101,11 +101,30 @@ exports.getAll = catchAsyncErrors(async (req, res, next) => {
 
 //Edit
   exports.update = catchAsyncErrors(async (req, res, next) => {
+    req.body.updated_at = Date.now();
+    //let image = [];
+    let album;
+
+  try {
+    for (let i = 0; i < album.image.length; i++) {
+    const result = await cloudinary.v2.uploader.destroy(album.image[i].public_id);
+       req.body.image = { public_id: result.public_id, url: result.secure_url };
+  }
+      } catch (error) {
+console.log(error);
+//return next(new ErrorHandler(error, 400));
+  }
+
+const result = await cloudinary.v2.uploader.upload(req.body.image, {
+    folder: "images",
+  });        
+  req.body.image = { public_id: result.public_id, url: result.secure_url };
+
     await Album.findByIdAndUpdate(req.params.id, req.body, {
         new: true,
         runValidators: true,
       });
-    const album = await Album.aggregate([
+    await Album.aggregate([
       {
         $lookup: {
           from: "producer",

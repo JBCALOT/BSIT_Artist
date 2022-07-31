@@ -120,7 +120,7 @@ let imageLinks = [];
   });
 
   try {
-    await cloudinary.v2.uploader.destroy(artist.image.public_id);
+    await cloudinary.v2.uploader.destroy(artist.image[0].public_id);
   } catch (error) {
     console.log(error);
   }

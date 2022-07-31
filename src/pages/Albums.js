@@ -114,7 +114,6 @@ const columns = [
             data={cellValues.row}
             startIcon={<span class="material-icons-round">info</span>}/>
             <Typography>{cellValues.row.artist[0].f_name + " " + cellValues.row.artist[0].l_name}</Typography></>
-          //<StyledButton component={StyledLink} to={"/"}>{cellValues.row.artist[0].f_name +" "+cellValues.row.artist[0].l_name}</StyledButton >
           //<StyledLink to={"/"}>{cellValues.row.artist[0].f_name +" "+cellValues.row.artist[0].l_name}</StyledLink>
       );
     },
@@ -143,7 +142,6 @@ const columns = [
     moment(cellValues.row.date_released).format("MMM. DD, YYYY"),
     sortComparator: (v1, v2) => new Date(v1) - new Date(v2),
   },
- 
   {
     field: "action",
     headerName: "Actions",
@@ -450,7 +448,7 @@ return(
                     onChange={onChange}
                     hidden
                   />
-                  Upload Artist Image
+                  Upload Album Cover
                 </StyledButton>
               </Grid>
               <ImageList cols={8} rowHeight={100}>

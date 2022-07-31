@@ -10,7 +10,7 @@ const {
 
 router.route("/").get(getAll);
 router.route("/store").post(store);
-router.route("/update/:id").patch(update);
+router.route("/update/:id").patch(update, getAll);
 router.route("/dlt/:id").delete(dlt);
 
 module.exports = router;

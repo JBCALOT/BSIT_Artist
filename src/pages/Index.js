@@ -13,51 +13,27 @@ import { Container } from "@mui/system";
 import {StyledLink} from "../assets/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 
-const a = require("../assets/1.svg").default;
-const b = require("../assets/2.svg").default;
-const c = require("../assets/4.svg").default;
-const f = require("../assets/5.svg").default;
+const a = require("../assets/6.svg").default;
+const b = require("../assets/4.svg").default;
 
-
-const Dashboard = () => {
+const Index = () => {
   useEffect(() => {
-    document.title = "BSIT | Home";
+    document.title = "BSIT | Index";
     return () => {};
   }, []);
 
   const cards = [
   {
-    title: "Tracks",
-    desc: "View Song Tracks...",
+    title: "Login",
+    desc: "Manage your music app",
     image: a,
-    alt: "Tracks",
-    to: "/track",
+    alt: "Login",
+    to: "/",
 },
 {
-  title: "Albums",
-  desc: "View Albums...",
-  image: b,
-  alt: "Albums",
-  to: "/album",
-},
-{
-  title: "Artists",
-  desc: "View Artists Information...",
-  image: f,
-  alt: "Artists",
-  to: "/artist",
-},
-{
-  title: "Producers",
-  desc: "View Producers Information...",
-  image: c,
-  alt: "Producer",
-  to: "/producer",
-},
-{
-  title: "Gallery",
+  title: "Continue as Guest",
   desc: "View Artist and Album gallery",
-  image: c,
+  image: b,
   alt: "gallery",
   to: "/gallery",
 },
@@ -76,23 +52,22 @@ return (
 <CssBaseline />
     <Container maxWidth="xl">
           <Typography
-          variant="h3"
+          variant="h2"
           sx={{ textTransform: "capitalize", color: "white" }}
           align="center"
         >
           <b>
-            My Dashboard
+            Welcome back
           </b>
         </Typography>
 <br/>
         <Container sx={{}} maxWidth="xl">
-        <Grid container spacing={3}>
+        <Grid container spacing={10}>
           {cards.map((card) => (
-            <Grid item key={card} xs={12} sm={6} md={4} lg={2.4} xl={2.4}>
+            <Grid item key={card} xs={12} sm={6} md={6} lg={6} xl={6}>
               <Card
                 sx={{
                   height: "100%",
-                  width: "108%",
                   display: "flex",
                   position: "sticky",
                   flexDirection: "column",
@@ -129,4 +104,4 @@ return (
 );
 
 };
-export default Dashboard;
+export default Index;

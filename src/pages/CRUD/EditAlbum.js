@@ -245,7 +245,7 @@ return(
                     onChange={onChange}
                     hidden
                   />
-                  Update Artist Image
+                  Update Album Image
                 </StyledButton>
               </Grid>
               <ImageList cols={8} rowHeight={100}>
