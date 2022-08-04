@@ -13,9 +13,9 @@ const { Server } = require("socket.io");
 connectDB();
 const app = express();
 const httpServer = createServer(app); 
-/* const io = new Server(httpServer, {
+const io = new Server(httpServer, {
   cors: { origin: ["http://localhost:3000"] },
-}); */
+});
 app.enable("trust proxy");
 
 app.use(express.json());
@@ -34,7 +34,8 @@ app.use("/api/artist", require("./routes/artist"));
 app.use("/api/producer", require("./routes/producer"));
 app.use("/api/album", require("./routes/album"));
 app.use("/api/track", require("./routes/track"));
-//app.use("/api/admin/auth", require("./routes/admin"));
+app.use("/api/auth/auth", require("./routes/auth"));
+app.use("/api/auth", require("./routes/auth"));
 
 
 app.use(error);
@@ -43,6 +44,10 @@ cloudinary.config({
     api_key: process.env.CLOUDINARY_API_KEY,
     api_secret: process.env.CLOUDINARY_API_SECRET,
   });
+
+  io.on("connection", (socket) => {
+    console.log(`socket.oi is now connected to server with id: ${socket.id}`);
+  });  
 
 const PORT = process.env.PORT || 4000;
 const server = httpServer.listen(PORT, () => {

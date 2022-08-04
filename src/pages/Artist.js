@@ -20,6 +20,7 @@ import {
   AddArtist,
   GetAllArtist,
  } from "../redux/slices/ArtistSlice";
+ import Appbar from "../assets/Appbar";
 import EditArtist from "./CRUD/EditArtist";
 import ArtistDetails from "./CRUD/ViewArtistDetails";
 import Delete from "./CRUD/Delete";
@@ -193,6 +194,7 @@ return(
 <CssBaseline />
 
     <Container maxWidth="xl">
+    <Appbar/><br/>
           <Typography
           variant="h3"
           sx={{ textTransform: "capitalize", color: "white" }}

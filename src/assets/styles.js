@@ -53,6 +53,20 @@ export const StyledLink = styled(Link)({
       color:"#008037"  },
   });
 
+  export const LoginButton = styled(Button)({
+    background: "#008037", //button color
+    color: "black", //text-color
+    marginTop: 5,
+    marginBottom: 2,
+    marginRight: 4,
+    borderRadius:70,
+  
+    "&:hover": {
+      background: "#fff",
+      borderColor: "#008037",
+      color:"#008037"  },
+  });
+
   export const StyledTextField = styled(TextField)({
     background: "white",
     borderRadius: 3,

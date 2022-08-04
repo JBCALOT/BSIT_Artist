@@ -28,7 +28,7 @@ const Index = () => {
     desc: "Manage your music app",
     image: a,
     alt: "Login",
-    to: "/",
+    to: "/login",
 },
 {
   title: "Continue as Guest",

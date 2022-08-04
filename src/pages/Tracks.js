@@ -25,12 +25,11 @@ import {
  } from "../redux/slices/TrackSlice";
  import {GetAllAlbum} from "../redux/slices/AlbumSlice";
  import {GetAllArtist, GetArtistDetails, } from "../redux/slices/ArtistSlice";
-
  import ArtistInDetails from "./CRUD/ViewArtistInTrack";
  import AlbumInDetails from "./CRUD/ViewAlbumInTrack";
-
 import EditTrack from "./CRUD/EditTrack";
 import Delete from "./CRUD/Delete";
+import Appbar from "../assets/Appbar";
 import DateAdapterMoment from "@mui/lab/AdapterMoment";
 import LocalizationProvider from "@mui/lab/LocalizationProvider";
 import TimePicker from "@mui/lab/TimePicker";
@@ -237,6 +236,7 @@ return(
 <CssBaseline />
 
     <Container maxWidth="xl">
+      <Appbar/><br/>
           <Typography
           variant="h3"
           sx={{ textTransform: "capitalize", color: "white" }}

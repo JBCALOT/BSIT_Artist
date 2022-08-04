@@ -4,7 +4,6 @@ import CssBaseline from "@mui/material/CssBaseline";
 import {
   Avatar,
     Box, 
-    CardActions, 
     Container,
     Dialog,
     FormControl,
@@ -14,10 +13,11 @@ import {
     ImageListItem,
     MenuItem,
     Select,
+    Snackbar,
     Typography,
 } from "@mui/material";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
-import { StyledButton, StyledTextField, StyledLink, } from "../assets/styles";
+import { StyledButton, StyledTextField, } from "../assets/styles";
 import { 
   AddAlbum,
   GetAllAlbum,
@@ -27,6 +27,7 @@ import {
  import ArtistInDetails from "./CRUD/ViewArtistInAlbum";
 import EditAlbum from "./CRUD/EditAlbum";
 import Delete from "./CRUD/Delete";
+import Appbar from "../assets/Appbar";
 import DateAdapterMoment from "@mui/lab/AdapterMoment";
 import LocalizationProvider from "@mui/lab/LocalizationProvider";
 import DatePicker from "@mui/lab/DatePicker";
@@ -34,7 +35,6 @@ import TimePicker from "@mui/lab/TimePicker";
 import moment from "moment";
 
 const Album = () => {
-
   useEffect(() => {
     document.title = "BSIT | Albums";
     return () => {};
@@ -246,6 +246,7 @@ return(
 <CssBaseline />
 
     <Container maxWidth="xl">
+    <Appbar/><br/>
           <Typography
           variant="h3"
           sx={{ textTransform: "capitalize", color: "white" }}

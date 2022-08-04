@@ -2,13 +2,13 @@ const mongoose = require("mongoose");
 const jwt = require("jsonwebtoken");
 const crypto = require("crypto");
 const bcrypt = require("bcryptjs");
-const validator = require("validator");
+//const validator = require("validator");
 
 const userSchema = mongoose.Schema({
   email: {
     type: String,
     required: [true, "Please provide your email Address"],
-    validate: [validator.isEmail, "Please Enter a valid Email Address"],
+    //validate: [validator.isEmail, "Please Enter a valid Email Address"],
     unique: true,
   },
   username: {
@@ -45,10 +45,10 @@ userSchema.pre("save", async function (next) {
   this.password = await bcrypt.hash(this.password, salt);
 });
 
-userSchema.path("phone_number").validate(function (value) {
+/* userSchema.path("phone_number").validate(function (value) {
   const regex = /^(09|\+639)\d{9}$/gm;
   return regex.test(value);
-}, "Phone number is Invalid");
+}, "Phone number is Invalid"); */
 
 // Compare user password
 userSchema.methods.matchPasswords = async function (enteredPassword) {

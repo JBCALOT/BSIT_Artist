@@ -16,6 +16,7 @@ import {
  } from "../redux/slices/ProducerSlice";
 import EditProd from "./CRUD/EditProducer";
 import Delete from "./CRUD/Delete";
+import Appbar from "../assets/Appbar";
 
 const Producer = () => {
 
@@ -130,6 +131,7 @@ return(
 <CssBaseline />
 
     <Container maxWidth="xl">
+    <Appbar/><br/>
           <Typography
           variant="h3"
           sx={{ textTransform: "capitalize", color: "white" }}

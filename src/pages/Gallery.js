@@ -13,7 +13,6 @@ import {
 } from "@mui/material";
 import { styled } from '@mui/material/styles';
 import { Container } from "@mui/system";
-import {StyledLink} from "../assets/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 import {GetAllArtist} from "../redux/slices/ArtistSlice";
 import {GetAllAlbum} from "../redux/slices/AlbumSlice";

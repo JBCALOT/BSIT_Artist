@@ -9,9 +9,29 @@ export const GetAuthDetails = createAsyncThunk(
     try {
       const response = await axios.get(
         `${process.env.REACT_APP_API_HOST}api/auth/me`,
-      );
+        {
+          headers: { Authorization: "Bearer " + localStorage.getItem("token") },
+        }
+        );
       return response.data;
     } catch (error) {
+      return rejectWithValue(error.response.data.message);
+    }
+  }
+);
+
+export const LoginUserThunk = createAsyncThunk(
+  "admin/login",
+  async (formdata, { rejectWithValue }) => {
+    try {
+      const response = await axios.post(
+        `${process.env.REACT_APP_API_HOST}api/auth/auth/login`,
+        formdata
+      );
+      localStorage.setItem("token", response.data.token);
+      return response.data;
+    } catch (error) {
+      console.log(error);
       return rejectWithValue(error.response.data.message);
     }
   }
@@ -22,8 +42,11 @@ export const LogoutAdminThunk = createAsyncThunk(
   async (obj, { rejectWithValue }) => {
     try {
       const response = await axios.get(
-        `${process.env.REACT_APP_API_HOST}api/admin/auth/logout`,
-      );
+        `${process.env.REACT_APP_API_HOST}api/auth/auth/logout`,
+        {
+          headers: { Authorization: "Bearer " + localStorage.getItem("token") },
+        }
+        );
       return response.data;
     } catch (error) {
       return rejectWithValue(error.response.data.message);
@@ -36,9 +59,13 @@ export const CreateAdminThunk = createAsyncThunk(
     async (formdata, { rejectWithValue }) => {
       try {
         const response = await axios.post(
-          `${process.env.REACT_APP_API_HOST}api/admin/auth/register`,
+          `${process.env.REACT_APP_API_HOST}api/auth/auth/register`,
           formdata,
+          {
+            headers: { Authorization: "Bearer " + localStorage.getItem("token") },
+          }
         );
+        localStorage.setItem("token", response.data.token);
         return response.data;
       } catch (error) {
         return rejectWithValue(error.response.data.message);
@@ -54,7 +81,7 @@ const initialState = {
     success: null,
   };
   
-const adminSlice = createSlice({
+const userSlice = createSlice({
 name: "admin",
 initialState,
 reducers: {
@@ -66,14 +93,27 @@ reducers: {
     },
     },
 extraReducers: {
-    [LogoutAdminThunk.pending]: (state) => {
-        state.loading = true;
-    },
+  [LoginUserThunk.pending]: (state) => {
+    state.loading = true;
+  },
+  [LoginUserThunk.fulfilled]: (state, action) => {
+    state.isAuthenticated = true;
+    state.loading = false;
+    state.user = action.payload.user;
+    // localStorage.setItem("token", action.payload.token);
+  },
+  [LoginUserThunk.rejected]: (state, action) => {
+    state.isAuthenticated = false;
+    state.loading = false;
+    state.errors = action.payload;
+  },
+  [LogoutAdminThunk.pending]: (state) => {
+    state.loading = true;
+  },
     [LogoutAdminThunk.fulfilled]: (state) => {
         state.loading = false;
         state.isAuthenticated = false;
         state.user = null;
-        state.role = null;
     },
     [LogoutAdminThunk.rejected]: (state, action) => {
         state.loading = false;
@@ -86,16 +126,15 @@ extraReducers: {
         state.isAuthenticated = true;
         state.loading = false;
         state.success = action.payload.message;
-        state.admin = [...state.admin, action.payload.admin];
+        state.user = action.payload.user;
     },
     [CreateAdminThunk.rejected]: (state, action) => {
         state.isAuthenticated = false;
         state.loading = false;
-        state.role = null;
         state.errors = JSON.parse(action.payload);
     },
 },
 });
-export const { clearError, clearSuccess } = adminSlice.actions;
-export default adminSlice.reducer;
+export const { clearError, clearSuccess } = userSlice.actions;
+export default userSlice.reducer;
                  

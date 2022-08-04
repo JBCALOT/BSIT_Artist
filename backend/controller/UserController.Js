@@ -9,8 +9,8 @@ exports.register = catchAsyncErrors(async (req, res, next) => {
     success: true,
     message: "Account has been successfully Added",
     user: user,
+    sendToken
   });
-  // sendToken(admin, "admin", 200, res);
 });
 
 // Start Login Block
@@ -22,30 +22,21 @@ exports.login = catchAsyncErrors(async (req, res, next) => {
     if (!email || !password) {
       return next(new ErrorHandler("Please enter Email and Password", 400));
     }
-  
     // check if username or email was entered
     const user = await User.findOne({
       $or: [{ email: email }, { username: email }],
     }).select("+password");
     // if no match
-  
     if (!user) {
       return next(new ErrorHandler("No Admin Found!", 404));
     }
-  
     //match password
     const isMatch = await user.matchPasswords(password);
     if (!isMatch) {
       return next(new ErrorHandler("Invalid Credentials", 401));
     }
-  
-    /* // valid credentials to send token
-    sendToken(
-      admin,
-      admin.role !== "superadmin" ? "admin" : "superadmin",
-      200,
-      res
-    ); */
+    // valid credentials to send token
+    sendToken(user, "user", 200, res);
   });
 
   exports.getProfile = catchAsyncErrors(async (req, res, next) => {
@@ -54,4 +45,16 @@ exports.login = catchAsyncErrors(async (req, res, next) => {
         sucess: true,
         user,
       });
+  });
+
+  exports.logout = catchAsyncErrors(async (req, res, next) => {
+    res.cookie("token", null, {
+      expires: new Date(Date.now()),
+      httpOnly: true,
+    });
+  
+    res.status(200).json({
+      success: true,
+      message: "Logged out",
+    });
   });

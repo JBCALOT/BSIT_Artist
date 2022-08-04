@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-
+const { authenthicationCheck } = require("../middlewares/auth");
 const {
     store,
     update,
@@ -9,8 +9,8 @@ const {
 } = require("../controller/TrackController");
 
 router.route("/").get(getAll);
-router.route("/store").post(store,getAll);
-router.route("/update/:id").patch(update,getAll);
-router.route("/dlt/:id").delete(dlt);
+router.route("/store").post(authenthicationCheck, store,getAll);
+router.route("/update/:id").patch(authenthicationCheck, update,getAll);
+router.route("/dlt/:id").delete(authenthicationCheck, dlt);
 
 module.exports = router;

@@ -13,15 +13,15 @@ function Outlet() {
     <>
       {loading === false && isAuthenticated ? (
       <Routes>
-        <Route path="/" element={<Home />}></Route>
-        <Route path="/artist" element={<Artist />}></Route>
-        <Route path="/album" element={<Album />}></Route>
-        <Route path="/track" element={<Track />}></Route>
-        <Route path="/producer" element={<Producer />}></Route>
-        <Route path="/gallery" element={<Gallery />}></Route>
+        <Route index element={<Home />} />
+        <Route path="/artist" element={<Artist />}/>
+        <Route path="/album" element={<Album />}/>
+        <Route path="/track" element={<Track />}/>
+        <Route path="/producer" element={<Producer />}/>
+        <Route path="/gallery" element={<Gallery />}/>
       </Routes>
 ) : (
-    isAuthenticated === false && <Navigate to={"/index"} />
+    isAuthenticated === false && <Navigate to={"/"} />
     )}
     </>
   );
