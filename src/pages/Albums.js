@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import CssBaseline from "@mui/material/CssBaseline";
 import {
+  Alert,
+  AlertTitle,
   Avatar,
     Box, 
     Container,
@@ -21,6 +23,7 @@ import { StyledButton, StyledTextField, } from "../assets/styles";
 import { 
   AddAlbum,
   GetAllAlbum,
+  clearError, clearSuccess
  } from "../redux/slices/AlbumSlice";
  import {GetAllProducer} from "../redux/slices/ProducerSlice";
  import {GetAllArtist} from "../redux/slices/ArtistSlice";
@@ -59,6 +62,11 @@ const Album = () => {
   );
 
   const dispatch = useDispatch();
+
+  const onClose = (e) => {
+    dispatch(clearSuccess());
+    dispatch(clearError());
+  };
 
 const hrs = ["01", "02", "03", "04", "05","06","07","08","09","10","11", "12", "13", "14", "15","16","17","18","19","20","21", "22", "23"];
 const mins = ["01", "02", "03", "04", "05","06","07","08","09","10","11", "12", "13", "14", "15","16","17","18","19","20","21", "22", "23", "24", "25","26","27","28","29","30","31", "32", "33", "34", "35","36","37","38","39","40","41", "42", "43", "44", "45","46","47","48","49","50","51", "52", "53", "54", "55","56","57","58","59"];
@@ -114,7 +122,6 @@ const columns = [
             data={cellValues.row}
             startIcon={<span class="material-icons-round">info</span>}/>
             <Typography>{cellValues.row.artist[0].f_name + " " + cellValues.row.artist[0].l_name}</Typography></>
-          //<StyledLink to={"/"}>{cellValues.row.artist[0].f_name +" "+cellValues.row.artist[0].l_name}</StyledLink>
       );
     },
     sortComparator: (v1, v2) => v1.localeCompare(v2),
@@ -131,7 +138,7 @@ const columns = [
     sortComparator: (v1, v2) => new Date(v1) - new Date(v2),
   },
   {
-    field: "date_relesed",
+    field: "date_released",
     headerName: "Date Released",
     flex: 1,
     headerAlign: "center",
@@ -244,6 +251,34 @@ return(
         minHeight: "100vh",
       }}>
 <CssBaseline />
+
+{success && (
+          <Snackbar
+            open={success}
+            autoHideDuration={3000}
+            onClose={onClose}
+            name="sucess"
+          >
+            <Alert severity="success" variant="filled">
+              <AlertTitle>Success</AlertTitle>
+              {success}
+            </Alert>
+          </Snackbar>
+        )}
+  
+        {errors && (
+          <Snackbar
+            open={errors}
+            autoHideDuration={3000}
+            onClose={onClose}
+            name="error"
+          >
+            <Alert severity="error" variant="filled">
+              <AlertTitle>Error</AlertTitle>
+              {errors}
+            </Alert>
+          </Snackbar>
+          )}
 
     <Container maxWidth="xl">
     <Appbar/><br/>

@@ -80,7 +80,7 @@ const onClose = (e) => {
             name="error"
           >
             <Alert severity="error" variant="filled">
-              <AlertTitle>Error Login</AlertTitle>
+              <AlertTitle>Error Signign Up</AlertTitle>
               {errors}
             </Alert>
           </Snackbar>
@@ -171,14 +171,7 @@ const onClose = (e) => {
                 </EditButton>
               </form>
             </FormControl>
-  
-            <Grid container>
-              <Grid item>
-                <StyledLink to="/register">
-                  Don't have an account? <u>Sign Up</u>
-                </StyledLink>
-              </Grid>
-            </Grid>
+
           </Box>
         </Container>
       </Box>

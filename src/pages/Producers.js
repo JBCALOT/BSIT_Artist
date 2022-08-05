@@ -2,17 +2,19 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import CssBaseline from "@mui/material/CssBaseline";
 import {
+  Alert,
+  AlertTitle,
     Box, 
     Container,
     Dialog,
     Grid,
+    Snackbar,
     Typography,
 } from "@mui/material";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import { StyledButton, StyledTextField } from "../assets/styles";
 import { 
-  AddProducer,
-  GetAllProducer,
+  AddProducer,GetAllProducer, clearError,clearSuccess
  } from "../redux/slices/ProducerSlice";
 import EditProd from "./CRUD/EditProducer";
 import Delete from "./CRUD/Delete";
@@ -36,6 +38,11 @@ const Producer = () => {
     (state) => state.producer
   );
   const dispatch = useDispatch();
+
+  const onClose = (e) => {
+    dispatch(clearSuccess());
+    dispatch(clearError());
+  };
 
 //Datagrid
 const columns = [
@@ -128,7 +135,36 @@ return(
         pb: 5,
         minHeight: "100vh",
       }}>
+
 <CssBaseline />
+
+{success && (
+          <Snackbar
+            open={success}
+            autoHideDuration={3000}
+            onClose={onClose}
+            name="sucess"
+          >
+            <Alert severity="success" variant="filled">
+              <AlertTitle>Success</AlertTitle>
+              {success}
+            </Alert>
+          </Snackbar>
+        )}
+  
+        {errors && (
+          <Snackbar
+            open={errors}
+            autoHideDuration={3000}
+            onClose={onClose}
+            name="error"
+          >
+            <Alert severity="error" variant="filled">
+              <AlertTitle>Error</AlertTitle>
+              {errors}
+            </Alert>
+          </Snackbar>
+          )}
 
     <Container maxWidth="xl">
     <Appbar/><br/>

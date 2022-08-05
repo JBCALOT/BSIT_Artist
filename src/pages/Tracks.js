@@ -3,6 +3,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import CssBaseline from "@mui/material/CssBaseline";
 import {
+  Alert,
+  AlertTitle,
     Box,
     Card,
     CardMedia, 
@@ -15,13 +17,16 @@ import {
     InputLabel,
     MenuItem,
     Select,
+    Snackbar,
     Typography,
 } from "@mui/material";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import { StyledButton, StyledTextField } from "../assets/styles";
 import { 
   AddTrack,
-  GetAllTracks,
+  GetAllTracks, 
+  clearError, 
+  clearSuccess
  } from "../redux/slices/TrackSlice";
  import {GetAllAlbum} from "../redux/slices/AlbumSlice";
  import {GetAllArtist, GetArtistDetails, } from "../redux/slices/ArtistSlice";
@@ -184,6 +189,7 @@ const handleRowClick = (param, e) => {
 };
  */
 
+
 const [values, setvalues] = useState({
   album: "",
   artist_name: "",
@@ -211,6 +217,11 @@ const handleSubmit = (e) => {
   setOpen(false);
 };
 
+const onClose = (e) => {
+  dispatch(clearSuccess());
+  dispatch(clearError());
+};
+
 useEffect(() => {
   dispatch(GetAllAlbum());
   return () => {};
@@ -234,6 +245,34 @@ return(
         minHeight: "100vh",
       }}>
 <CssBaseline />
+
+{success && (
+          <Snackbar
+            open={success}
+            autoHideDuration={3000}
+            onClose={onClose}
+            name="sucess"
+          >
+            <Alert severity="success" variant="filled">
+              <AlertTitle>Success</AlertTitle>
+              {success}
+            </Alert>
+          </Snackbar>
+        )}
+  
+        {errors && (
+          <Snackbar
+            open={errors}
+            autoHideDuration={3000}
+            onClose={onClose}
+            name="error"
+          >
+            <Alert severity="error" variant="filled">
+              <AlertTitle>Error</AlertTitle>
+              {errors}
+            </Alert>
+          </Snackbar>
+          )}
 
     <Container maxWidth="xl">
       <Appbar/><br/>
