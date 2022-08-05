@@ -19,7 +19,7 @@ const dispatch = useDispatch();
     <Box>
       <AppBar position="fixed">
         <Toolbar>
-          {/* <IconButton
+          <IconButton
             size="large"
             edge="start"
             color="inherit"
@@ -27,7 +27,7 @@ const dispatch = useDispatch();
             sx={{ mr: 2 }}
           >
             <MenuIcon />
-          </IconButton> */}
+          </IconButton>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             {document.title}
           </Typography>
