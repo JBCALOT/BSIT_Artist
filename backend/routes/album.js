@@ -11,7 +11,7 @@ const {
 
 router.route("/").get(getAll);
 router.route("/store").post(authenthicationCheck, store);
-router.route("/update/:id").patch(authenthicationCheck, update, getAll);
+router.route("/update/:id").patch( authenthicationCheck, update, getAll);
 router.route("/dlt/:id").delete(authenthicationCheck, dlt);
 
 module.exports = router;

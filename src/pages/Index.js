@@ -14,7 +14,7 @@ import {StyledLink} from "../assets/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 
 const a = require("../assets/6.svg").default;
-const b = require("../assets/4.svg").default;
+const b = require("../assets/Guest.svg").default;
 
 const Index = () => {
   useEffect(() => {
@@ -32,7 +32,7 @@ const Index = () => {
 },
 {
   title: "Continue as Guest",
-  desc: "View Artist and Album gallery",
+  desc: "View Artists and Albums",
   image: b,
   alt: "gallery",
   to: "/gallery",

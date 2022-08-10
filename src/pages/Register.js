@@ -13,7 +13,6 @@ import {
   } from "@mui/material";
 import { EditButton, LoginButton, StyledTextField, StyledLink, } from "../assets/styles";
 import {CreateAdminThunk, clearSuccess, clearError } from "../redux/slices/UserSlice";
-
 const LoginUser = () => {
 const { loading, isAuthenticated, errors, success} = useSelector((state) => state.user);
 const dispatch = useDispatch();
@@ -85,9 +84,7 @@ const onClose = (e) => {
             </Alert>
           </Snackbar>
         )}
-        {/* <BackBtn component={StyledLink} to="/">
-          Back to Homepage
-        </BackBtn> */}
+        
         <Container component="main" sx={{ mt: 8, mb: 2 }} maxWidth="sm">
           <Box
             sx={{
@@ -100,6 +97,7 @@ const onClose = (e) => {
                 boxShadow: 3,
             }}
           >
+          
             <Typography variant="h3" sx={{ fontWeight: "bold", color: "#021707", textAlign: "center" }}>
               SIGN UP
             </Typography> <br/>
@@ -114,7 +112,6 @@ const onClose = (e) => {
                   label="Username"
                   name="username"
                   onChange={onChange}
-                  autoComplete="username"
                   autoFocus
                 />
                 <StyledTextField
@@ -126,7 +123,6 @@ const onClose = (e) => {
                   name="email"
                   onChange={onChange}
                   autoComplete="email"
-                  autoFocus
                 />
                 <StyledTextField
                   margin="normal"
@@ -138,7 +134,6 @@ const onClose = (e) => {
                   type="password"
                   onChange={onChange}
                   id="password"
-                  autoComplete="current-password"
                 />
                 <StyledTextField
                   margin="normal"
@@ -150,7 +145,6 @@ const onClose = (e) => {
                   type="password"
                   onChange={onChange}
                   id="password"
-                  autoComplete="current-password"
                 />
             <Grid item sx={{textAlign: "center", p: 3}}>
                 <span align="center" class="material-icons-round">music_note</span>
@@ -171,7 +165,13 @@ const onClose = (e) => {
                 </EditButton>
               </form>
             </FormControl>
-
+            <Grid container>
+              <Grid item>
+                <StyledLink to="/login">
+                  Already have an account? <u>Log in</u>
+                </StyledLink>
+              </Grid>
+            </Grid>
           </Box>
         </Container>
       </Box>

@@ -18,7 +18,10 @@ export const GetAllAlbum = createAsyncThunk(
     async (obj, { rejectWithValue }) => {
       try {
         const response = await axios.post(
-          `${process.env.REACT_APP_API_HOST}api/album/store`,obj.data,);
+          `${process.env.REACT_APP_API_HOST}api/album/store`,obj.data,
+          {
+            headers: { Authorization: "Bearer " + localStorage.getItem("token")},
+          });
         return response.data;
       } catch (error) {
         return rejectWithValue(error.response.data.message);
@@ -31,8 +34,10 @@ export const GetAllAlbum = createAsyncThunk(
     async (obj, { rejectWithValue }) => {
       try {
         const response = await axios.patch(
-          `${process.env.REACT_APP_API_HOST}api/album/update/${obj.id}`,
-          obj.data,);
+          `${process.env.REACT_APP_API_HOST}api/album/update/${obj.id}`,obj.data,
+          {
+            headers: { Authorization: "Bearer " + localStorage.getItem("token") },
+          });
         return response.data;
       } catch (error) {
         return rejectWithValue(error.response.data.message);
@@ -45,7 +50,10 @@ export const GetAllAlbum = createAsyncThunk(
     async (obj, { rejectWithValue }) => {
       try {
         const response = await axios.delete(
-          `${process.env.REACT_APP_API_HOST}api/album/dlt/${obj.id}`,);
+          `${process.env.REACT_APP_API_HOST}api/album/dlt/${obj.id}`,
+          {
+            headers: { Authorization: "Bearer " + localStorage.getItem("token") },
+          });
         return response.data;
       } catch (error) {
         return rejectWithValue(error.response.data.message);

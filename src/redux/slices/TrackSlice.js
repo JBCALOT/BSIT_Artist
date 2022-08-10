@@ -18,7 +18,9 @@ export const GetAllTracks = createAsyncThunk(
     async (obj, { rejectWithValue }) => {
       try {
         const response = await axios.post(
-          `${process.env.REACT_APP_API_HOST}api/track/store`,obj.data,);
+          `${process.env.REACT_APP_API_HOST}api/track/store`,obj.data,{
+            headers: { Authorization: "Bearer " + localStorage.getItem("token") },
+          });
         return response.data;
       } catch (error) {
         return rejectWithValue(error.response.data.message);
@@ -31,8 +33,11 @@ export const GetAllTracks = createAsyncThunk(
     async (obj, { rejectWithValue }) => {
       try {
         const response = await axios.patch(
-          `${process.env.REACT_APP_API_HOST}api/track/update/${obj.id}`,
-          obj.data,);
+          `${process.env.REACT_APP_API_HOST}api/track/update/${obj.id}`,obj.data,
+          {
+            headers: { Authorization: "Bearer " + localStorage.getItem("token") },
+          });
+          
         return response.data;
       } catch (error) {
         return rejectWithValue(error.response.data.message);
@@ -45,7 +50,9 @@ export const GetAllTracks = createAsyncThunk(
     async (obj, { rejectWithValue }) => {
       try {
         const response = await axios.delete(
-          `${process.env.REACT_APP_API_HOST}api/track/dlt/${obj.id}`,);
+          `${process.env.REACT_APP_API_HOST}api/track/dlt/${obj.id}`,{
+            headers: { Authorization: "Bearer " + localStorage.getItem("token") },
+          });
         return response.data;
       } catch (error) {
         return rejectWithValue(error.response.data.message);

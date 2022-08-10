@@ -148,11 +148,18 @@ const result = await cloudinary.v2.uploader.upload(req.body.image, {
         },
       },
     ]);
-    res.status(200).json({
+    // res.status(200).json({
+    //   success: true,
+    //   message: `Album successfully updated`,
+    //   album,
+    // });
+
+   const status = {
+      message: "Track Updated!",
       success: true,
-      message: `Album successfully updated`,
-      album,
-    });
+    }
+    req.body.status = status
+        next();
   });
 
 //Delete

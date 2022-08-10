@@ -10,8 +10,8 @@ const {
 } = require("../controller/ProducerController");
 
 router.route("/").get(getAll);
-router.route("/store").post(authenthicationCheck, store);
+router.route("/store").post( authenthicationCheck, store);
 router.route("/update/:id").patch(authenthicationCheck, update);
-router.route("/dlt/:id").delete(authenthicationCheck, dlt);
+router.route("/dlt/:id").delete( authenthicationCheck, dlt);
 
 module.exports = router;

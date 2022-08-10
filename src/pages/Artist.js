@@ -176,7 +176,7 @@ const handleSubmit = (e) => {
   formData.append("birthday", values.birthday);
   formData.append("info", values.info);
   image.forEach((image) => {
-    //  * Use append() here instead of set(). in order not replace the current value of the image...
+//* Use append() here instead of set(). in order not replace the current value of the image...
     formData.append("image", image);
   });
   dispatch(AddArtist({data: formData}));

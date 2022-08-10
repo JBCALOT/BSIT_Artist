@@ -9,19 +9,25 @@ import {
     CardMedia,
     Collapse,
     Grid,
-    IconButton
+    IconButton,
+    Rating
 } from "@mui/material";
 import { styled } from '@mui/material/styles';
+import { StyledLink } from "../assets/styles";
 import { Container } from "@mui/system";
 import CssBaseline from "@mui/material/CssBaseline";
 import {GetAllArtist} from "../redux/slices/ArtistSlice";
 import {GetAllAlbum} from "../redux/slices/AlbumSlice";
+import FavoriteIcon from "@mui/icons-material/Favorite";
+import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
+import ArrowBackIosRoundedIcon from '@mui/icons-material/ArrowBackIosRounded';
 import moment from "moment";
 //import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
 
 const Gallery = () => {
-  const [expanded, setExpanded] = useState(false);
+const dispatch = useDispatch();
+const [expanded, setExpanded] = useState(false);
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
@@ -31,7 +37,6 @@ const Gallery = () => {
     return () => {};
   }, []);
   
-const dispatch = useDispatch();
 
 const {album} = useSelector(
     (state) => state.album
@@ -49,6 +54,15 @@ const {album} = useSelector(
     return () => {};
   }, [dispatch]);
 
+  const StyledRating = styled(Rating)({
+    "& .MuiRating-iconFilled": {
+      color: "#008037"
+    },
+    "& .MuiRating-iconHover": {
+      color: "#008037"
+    }
+  });
+
   const ExpandMore = styled((props) => {
     const { expand, ...other } = props;
     return <IconButton {...other} />;
@@ -61,16 +75,19 @@ const {album} = useSelector(
   }));
 
 return (
-
 <Box  sx={{
         bgcolor: "#021707",
-        pt: 6,
+        pt: 2,
         pb: 5,
         minHeight: "100vh",
       }}>
 <CssBaseline />
     <Container maxWidth="xl">
-          <Typography
+    <IconButton component={StyledLink} to="/" size="small" color="primary">
+          <ArrowBackIosRoundedIcon/>Back to Index
+        </IconButton >
+
+        <Typography
           variant="h3"
           sx={{ textTransform: "capitalize", color: "white" }}
           align="center"
@@ -113,6 +130,7 @@ return (
                       image={art.image && Array.isArray(art.image) ? art.image.length > 0 ? art.image[0].url : "https://via.placeholder.com/400/008307?text=Image+Placeholder" : null}
                       
                     />
+
                     <ExpandMore
                     expand={expanded}
                     onClick={handleExpandClick}
@@ -121,7 +139,6 @@ return (
                   >
                     <span class="material-icons">expand_more</span>
                     <Typography variant="h6" sx={{textAlign: "center", mt:1, color: "#008037", transform: !expanded ? 'rotate(0deg)' : 'rotate(180deg)',}}>{art.f_name + " " + art.l_name}</Typography>
-                    
                   </ExpandMore>
             <Collapse in={expanded} timeout="auto" unmountOnExit>
             <CardContent sx={{ flexGrow: 1}}>
@@ -133,13 +150,22 @@ return (
               </Grid>
               </CardContent>
             </Collapse>
-                </CardActionArea>
+          </CardActionArea>
+              <StyledRating
+                  name="customized-color"
+                  defaultValue={0}
+                  max={1}
+                  getLabelText={(value) => `${value} Heart${value !== 1 ? "s" : ""}`}
+                  precision={1}
+                  size="small"
+                  icon={<FavoriteIcon fontSize="inherit" />}
+                  emptyIcon={<FavoriteBorderIcon fontSize="inherit" />}
+                />
               </Card>
             </Grid>
           ))}
         </Grid>
       </Container>
-
 
       <Container sx={{}} maxWidth="xl">
         <Typography

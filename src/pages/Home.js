@@ -1,5 +1,4 @@
-import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
 import {
     Box, 
     Typography, 
@@ -8,19 +7,16 @@ import {
     CardContent,
     CardMedia, 
     Grid,
-    IconButton,
 } from "@mui/material";
 import Appbar from "../assets/Appbar";
 import { Container } from "@mui/system";
 import {StyledLink} from "../assets/styles";
 import CssBaseline from "@mui/material/CssBaseline";
-import { LogoutAdminThunk } from "../redux/slices/UserSlice";
 
 const a = require("../assets/1.svg").default;
 const b = require("../assets/2.svg").default;
 const c = require("../assets/4.svg").default;
 const f = require("../assets/5.svg").default;
-
 
 const Dashboard = () => {
   useEffect(() => {
@@ -28,35 +24,31 @@ const Dashboard = () => {
     return () => {};
   }, []);
 
-  const Logout = (e) => {
-    dispatch(LogoutAdminThunk());
-  };
-
   const cards = [
   {
     title: "Producers",
-    desc: "View Producers Information...",
+    desc: "Manage Producers Information...",
     image: c,
     alt: "Producer",
     to: "/admin/producer",
   },
   {
     title: "Tracks",
-    desc: "View Song Tracks...",
+    desc: "Manage Song Tracks...",
     image: a,
     alt: "Tracks",
     to: "/admin/track",
 },
 {
   title: "Albums",
-  desc: "View Albums...",
+  desc: "Manage Albums...",
   image: b,
   alt: "Albums",
   to: "/admin/album",
 },
 {
   title: "Artists",
-  desc: "View Artists Information...",
+  desc: "Manage Artists Information...",
   image: f,
   alt: "Artists",
   to: "/admin/artist",
@@ -71,19 +63,15 @@ const Dashboard = () => {
 }, */
 ];
 
-const dispatch = useDispatch();
-
 return (
-
 <Box  sx={{
         bgcolor: "#021707",
         pb: 5,
-        pt: 4,
+        pt: 5,
         minHeight: "100vh",
       }}>
 <CssBaseline />
     <Container maxWidth="xl">
-      {/* <IconButton size="large" onClick={Logout}><LogoutIcon/></IconButton> */}
           <Appbar/><br/>
           <Typography
           variant="h3"
@@ -98,7 +86,7 @@ return (
         <Container sx={{}} maxWidth="xl">
         <Grid container spacing={3}>
           {cards.map((card) => (
-            <Grid item key={card} xs={12} sm={6} md={4} lg={2.4} xl={2.4}>
+            <Grid item key={card} xs={12} sm={6} md={3} lg={3} xl={3}>
               <Card
                 sx={{
                   height: "100%",

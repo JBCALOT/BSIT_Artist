@@ -18,7 +18,10 @@ export const GetAllProducer = createAsyncThunk(
     async (obj, { rejectWithValue }) => {
       try {
         const response = await axios.post(
-          `${process.env.REACT_APP_API_HOST}api/producer/store`,obj.data,);
+          `${process.env.REACT_APP_API_HOST}api/producer/store`,obj.data,
+          {
+            headers: { Authorization: "Bearer " + localStorage.getItem("token") },
+          });
         return response.data;
       } catch (error) {
         return rejectWithValue(error.response.data.message);
@@ -32,7 +35,10 @@ export const GetAllProducer = createAsyncThunk(
       try {
         const response = await axios.patch(
           `${process.env.REACT_APP_API_HOST}api/producer/update/${obj.id}`,
-          obj.data,);
+          obj.data,
+          {
+            headers: { Authorization: "Bearer " + localStorage.getItem("token") },
+          });
         return response.data;
       } catch (error) {
         return rejectWithValue(error.response.data.message);
@@ -45,7 +51,9 @@ export const GetAllProducer = createAsyncThunk(
     async (obj, { rejectWithValue }) => {
       try {
         const response = await axios.delete(
-          `${process.env.REACT_APP_API_HOST}api/producer/dlt/${obj.id}`,);
+          `${process.env.REACT_APP_API_HOST}api/producer/dlt/${obj.id}`,{
+            headers: { Authorization: "Bearer " + localStorage.getItem("token") },
+          });
         return response.data;
       } catch (error) {
         return rejectWithValue(error.response.data.message);
