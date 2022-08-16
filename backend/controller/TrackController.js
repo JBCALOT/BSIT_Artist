@@ -54,12 +54,15 @@ exports.getAll = catchAsyncErrors(async (req, res, next) => {
             },
           }, 
       ]);    
-      console.log(track);
-
+      //console.log(track);
+      const longtrack = await Track.findOne({}).sort({
+        duration : -1
+      }); 
     return res.status(200).json({
       success: req.body.status? req.body.status.success:true,
       message: req.body.status? req.body.status.message:null,
       track,
+      longtrack,
     });
   });
 

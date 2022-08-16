@@ -208,7 +208,6 @@ const handleSubmit = (e) => {
   const formData = new FormData();
   formData.append("album", values.album);
   formData.append("artist_name", values.artist_name);
-
   formData.append("track_name", values.track_name);
   formData.append("genre", values.genre);
   formData.append("duration.minutes", values.minutes);

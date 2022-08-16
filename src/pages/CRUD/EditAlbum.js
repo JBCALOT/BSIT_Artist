@@ -6,7 +6,6 @@ import {
     Dialog,
     FormControl,
     Grid,
-    IconButton,
     InputLabel,
     ImageList,
     ImageListItem,
@@ -33,7 +32,7 @@ const EditAlbumm = ({data, id}) => {
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
-  const { loading, album, errors, success } = useSelector(
+  const { loading, album } = useSelector(
     (state) => state.album
   );
   const {artist} = useSelector((state) => state.artist);
@@ -43,11 +42,18 @@ const EditAlbumm = ({data, id}) => {
 
   const dispatch = useDispatch();
 
+const hrs = ["00", "01", "02", "03", "04", "05","06","07","08","09","10","11", "12", "13", "14", "15","16","17","18","19","20","21", "22", "23"];
+const mins = ["00", "01", "02", "03", "04", "05","06","07","08","09","10","11", "12", "13", "14", "15","16","17","18","19","20","21", "22", "23", "24", "25","26","27","28","29","30","31", "32", "33", "34", "35","36","37","38","39","40","41", "42", "43", "44", "45","46","47","48","49","50","51", "52", "53", "54", "55","56","57","58","59"];
+const secs = ["00", "01", "02", "03", "04", "05","06","07","08","09","10","11", "12", "13", "14", "15","16","17","18","19","20","21", "22", "23", "24", "25","26","27","28","29","30","31", "32", "33", "34", "35","36","37","38","39","40","41", "42", "43", "44", "45","46","47","48","49","50","51", "52", "53", "54", "55","56","57","58","59"];
+
+
 const [values, setvalues] = useState({
   album_name: data.album_name,
   producer: data.producer[0]._id,
   artist: data.artist[0]._id,
-  duration: data.duration,
+  hours: data.duration.hours,
+  minutes: data.duration.minutes,
+  seconds: data.duration.seconds,  
   date_released: data.date_released,
 }); 
 
@@ -61,7 +67,9 @@ const handleSubmit = (e) => {
   formData.append("album_name", values.album_name);
   formData.append("producer", values.producer);
   formData.append("artist", values.artist);
-  formData.append("duration", values.duration);
+  formData.append("duration.hours", values.hours);
+  formData.append("duration.minutes", values.minutes);
+  formData.append("duration.seconds", values.seconds);
   formData.append("date_released", values.date_released);
   if (imageChanged) {
     image.forEach((image) => {
@@ -189,7 +197,7 @@ return(
             </FormControl>
           </Grid>
 
-          <Grid item xs={12} sm={12} md={6}>
+          {/* <Grid item xs={12} sm={12} md={6}>
             <LocalizationProvider dateAdapter={DateAdapterMoment}>
               <TimePicker
                 ampm={false}
@@ -209,7 +217,7 @@ return(
                   required
                   size="small" />} />
             </LocalizationProvider>
-          </Grid>
+          </Grid> */}
 
           <Grid item xs={12} sm={12} md={6}>
             <LocalizationProvider dateAdapter={DateAdapterMoment}>
@@ -234,8 +242,74 @@ return(
                 )} />
             </LocalizationProvider>
           </Grid>
+       
 
-          <Grid item xs={12}>
+        <Grid item xs={12} sm={12} md={6} sx={{flexDirection:"row"}}>
+              <Grid>
+                  <FormControl
+                    required
+                    fullWidth
+                    size="small"
+                    sx={{ backgroundColor: "white" }}
+                  >
+                    <InputLabel>Hours</InputLabel>
+                    <Select
+                      name="hours"
+                      id="hours"
+                      value={values.hours}
+                      onChange={onChange}
+                    >
+                        {hrs.map(info => (
+                      <MenuItem value={info}>{info}</MenuItem>
+                    ))} 
+                    </Select>
+                  </FormControl>
+                   </Grid>
+
+                  <Grid>
+                  <FormControl
+                    required
+                    fullWidth
+                    size="small"
+                    sx={{ backgroundColor: "white" }}
+                  >
+                    <InputLabel>Minutes</InputLabel>
+                    <Select
+                      name="minutes"
+                      id="minutes"
+                      value={values.minutes}
+                      onChange={onChange}
+                    >
+                        {mins.map(info => (
+                      <MenuItem value={info}>{info}</MenuItem>
+                    ))} 
+                    </Select>
+                  </FormControl>
+                   </Grid>
+
+                  <Grid>
+                  <FormControl
+                    required
+                    fullWidth
+                    size="small"
+                    sx={{ backgroundColor: "white" }}
+                  >
+                    <InputLabel>Seconds</InputLabel>
+                    <Select
+                      name="seconds"
+                      id="seconds"
+                      value={values.seconds}
+                      onChange={onChange}
+                    >
+                        {secs.map(info => (
+                      <MenuItem value={info}>{info}</MenuItem>
+                    ))} 
+                    </Select>
+                  </FormControl>
+                </Grid>
+              </Grid>
+
+              <Grid item xs={12} sm={12} md={6} >
                 <StyledButton variant="contained" component="label">
                   <input
                     type="file"
@@ -247,8 +321,8 @@ return(
                   />
                   Update Album Image
                 </StyledButton>
-              </Grid>
-              <ImageList cols={8} rowHeight={100}>
+             
+              <ImageList cols={4} rowHeight={100}>
               {imagePreview.map((img) => (
                 <ImageListItem key={img.public_id ? img.public_id : img}>
                   <img
@@ -259,10 +333,9 @@ return(
                   />
                 </ImageListItem>
               ))}
-            </ImageList>     
-
+            </ImageList>
+          </Grid>    
         </Grid>
-
         <Box
           sx={{
             display: "flex",

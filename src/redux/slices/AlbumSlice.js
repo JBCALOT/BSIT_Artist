@@ -82,6 +82,7 @@ export const GetAllAlbum = createAsyncThunk(
     //input_errors: null,
     errors: null,
     success: null,
+    long: null,
   };
 
   const AlbumSlice = createSlice({
@@ -102,6 +103,7 @@ export const GetAllAlbum = createAsyncThunk(
       [GetAllAlbum.fulfilled]: (state, action) => {
         state.loading = false;
         state.album = action.payload.album;
+        state.long = action.payload.long;
       },
       [GetAllAlbum.rejected]: (state, action) => {
         state.loading = false;

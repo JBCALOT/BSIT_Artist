@@ -68,9 +68,9 @@ const Album = () => {
     dispatch(clearError());
   };
 
-const hrs = ["01", "02", "03", "04", "05","06","07","08","09","10","11", "12", "13", "14", "15","16","17","18","19","20","21", "22", "23"];
-const mins = ["01", "02", "03", "04", "05","06","07","08","09","10","11", "12", "13", "14", "15","16","17","18","19","20","21", "22", "23", "24", "25","26","27","28","29","30","31", "32", "33", "34", "35","36","37","38","39","40","41", "42", "43", "44", "45","46","47","48","49","50","51", "52", "53", "54", "55","56","57","58","59"];
-const secs = ["01", "02", "03", "04", "05","06","07","08","09","10","11", "12", "13", "14", "15","16","17","18","19","20","21", "22", "23", "24", "25","26","27","28","29","30","31", "32", "33", "34", "35","36","37","38","39","40","41", "42", "43", "44", "45","46","47","48","49","50","51", "52", "53", "54", "55","56","57","58","59"];
+const hrs = ["00", "01", "02", "03", "04", "05","06","07","08","09","10","11", "12", "13", "14", "15","16","17","18","19","20","21", "22", "23"];
+const mins = ["00", "01", "02", "03", "04", "05","06","07","08","09","10","11", "12", "13", "14", "15","16","17","18","19","20","21", "22", "23", "24", "25","26","27","28","29","30","31", "32", "33", "34", "35","36","37","38","39","40","41", "42", "43", "44", "45","46","47","48","49","50","51", "52", "53", "54", "55","56","57","58","59"];
+const secs = ["00", "01", "02", "03", "04", "05","06","07","08","09","10","11", "12", "13", "14", "15","16","17","18","19","20","21", "22", "23", "24", "25","26","27","28","29","30","31", "32", "33", "34", "35","36","37","38","39","40","41", "42", "43", "44", "45","46","47","48","49","50","51", "52", "53", "54", "55","56","57","58","59"];
 
 //Datagrid
 const columns = [
@@ -133,9 +133,10 @@ const columns = [
     headerAlign: "center",
     align: "center",
     minWidth: 100,
-    valueGetter: (cellValues) =>
-    moment(cellValues.row.duration).format("HH:mm:ss"),
-    sortComparator: (v1, v2) => new Date(v1) - new Date(v2),
+    valueGetter: (cellValues) => {
+      return (cellValues.row.duration.hours + ":" + cellValues.row.duration.minutes + ":" + cellValues.row.duration.seconds);
+    },
+    sortComparator: (v1, v2) => v1.localeCompare(v2),
   },
   {
     field: "date_released",
@@ -187,8 +188,10 @@ const [values, setvalues] = useState({
   album_name: "",
   producer: "",
   artist: "",
-  duration: "",
-  date_released: "",
+  hours: "",
+  minutes: "",
+  seconds: "",
+   date_released: "",
 });
 
 const handleChange = (e) => {
@@ -219,10 +222,12 @@ const handleSubmit = (e) => {
   formData.append("album_name", values.album_name);
   formData.append("producer", values.producer);
   formData.append("artist", values.artist);
-  formData.append("duration", values.duration);
+  formData.append("duration.hours", values.hours);
+  formData.append("duration.minutes", values.minutes);
+  formData.append("duration.seconds", values.seconds);  
   formData.append("date_released", values.date_released);
   image.forEach((image) => {
-    //  * Use append() here instead of set(). in order not replace the current value of the image...
+    //* Use append() here instead of set(). in order not replace the current value of the image...
     formData.append("image", image);
   });
   dispatch(AddAlbum({data: formData}));
@@ -421,7 +426,7 @@ return(
                   </FormControl>
                 </Grid>    
 
-                <Grid item xs={12} sm={12} md={6}>
+                {/* <Grid item xs={12} sm={12} md={6}>
                  <LocalizationProvider dateAdapter={DateAdapterMoment}>
                   <TimePicker
                     ampm={false}
@@ -445,9 +450,9 @@ return(
                     size="small" />}
                     />
                   </LocalizationProvider>
-                  </Grid>
+                  </Grid> */}
 
-              <Grid item xs={12} sm={12} md={6}>
+          <Grid item xs={12} sm={12} md={6}>
               <LocalizationProvider dateAdapter={DateAdapterMoment}>
                 <DatePicker
                   disableFuture
@@ -474,7 +479,71 @@ return(
                 />
               </LocalizationProvider>
             </Grid>
-            <Grid item xs={12}>
+
+              <Grid item xs={12} sm={12} md={6} sx={{flexDirection:"row"}}>
+              <Grid>
+                  <FormControl
+                    required
+                    fullWidth
+                    size="small"
+                    sx={{ backgroundColor: "white" }}
+                  >
+                    <InputLabel>Hours</InputLabel>
+                    <Select
+                      name="hours"
+                      id="hours"
+                      onChange={handleChange}
+                    >
+                        {hrs.map(info => (
+                      <MenuItem value={info}>{info}</MenuItem>
+                    ))} 
+                    </Select>
+                  </FormControl>
+                   </Grid>
+
+                  <Grid>
+                  <FormControl
+                    required
+                    fullWidth
+                    size="small"
+                    sx={{ backgroundColor: "white" }}
+                  >
+                    <InputLabel>Minutes</InputLabel>
+                    <Select
+                      name="minutes"
+                      id="minutes"
+                      onChange={handleChange}
+                    >
+                        {mins.map(info => (
+                      <MenuItem value={info}>{info}</MenuItem>
+                    ))} 
+                    </Select>
+                  </FormControl>
+                   </Grid>
+
+                  <Grid>
+                  <FormControl
+                    required
+                    fullWidth
+                    size="small"
+                    sx={{ backgroundColor: "white" }}
+                  >
+                    <InputLabel>Seconds</InputLabel>
+                    <Select
+                      name="seconds"
+                      id="seconds"
+                      onChange={handleChange}
+                    >
+                        {secs.map(info => (
+                      <MenuItem value={info}>{info}</MenuItem>
+                    ))} 
+                    </Select>
+                  </FormControl>
+                </Grid>
+              </Grid>
+
+              
+            <Grid item xs={12} sm={12} md={6}>
                 <StyledButton variant="contained" component="label">
                   <input
                     type="file"
@@ -486,8 +555,8 @@ return(
                   />
                   Upload Album Cover
                 </StyledButton>
-              </Grid>
-              <ImageList cols={8} rowHeight={100}>
+              
+              <ImageList cols={4} rowHeight={100}>
               {imagePreview.map((img) => (
                 <ImageListItem key={img}>
                   <img
@@ -499,7 +568,7 @@ return(
                 </ImageListItem>
               ))}
             </ImageList>
-
+</Grid>
             </Grid>
             <Box
               sx={{

@@ -93,9 +93,14 @@ exports.getAll = catchAsyncErrors(async (req, res, next) => {
           },
         },
       ]);
-    return res.status(200).json({
+      //Longest album duration
+      const long = await Album.findOne({}).sort({
+        duration : -1
+      });
+return res.status(200).json({
       success: true,
       album,
+      long,
     });
   });
 
@@ -167,7 +172,7 @@ const result = await cloudinary.v2.uploader.upload(req.body.image, {
           localField: "artist",
           foreignField: "_id",
           as: "artist",
-        },
+        }, 
       },
       {
         $match: {
@@ -175,19 +180,18 @@ const result = await cloudinary.v2.uploader.upload(req.body.image, {
           producer: mongoose.Types.ObjectId(req.body.producer),
         },
       },
-    ]); */
-    // res.status(200).json({
-    //   success: true,
-    //   message: `Album successfully updated`,
-    //   album,
-    // });
-
-   const status = {
-      message: "Track Updated!",
+    ]); const status = {
+      message: "Album Updated!",
       success: true,
     }
     req.body.status = status
-        next();
+        next();*/
+
+     res.status(200).json({
+       success: `Album successfully updated`,
+       album,
+     });
+
   });
 
 //Delete
@@ -225,3 +229,4 @@ exports.dlt = catchAsyncErrors(async (req, res, next) => {
       album,
     });
   });
+
