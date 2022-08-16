@@ -99,6 +99,34 @@ exports.getAll = catchAsyncErrors(async (req, res, next) => {
     });
   });
 
+  //Get All album for guest
+exports.getAllGuest = catchAsyncErrors(async (req, res, next) => {
+  //await Album.find();
+  const album = await Album.aggregate([
+      {
+        $lookup: {
+          from: "producers",
+          localField: "producer",
+          foreignField: "_id",
+          as: "producer",
+        },
+      },
+      {
+        $lookup: {
+          from: "artists",
+          localField: "artist",
+          foreignField: "_id",
+          as: "artist",
+        },
+      },
+    ]);
+  return res.status(200).json({
+    success: true,
+    album,
+  });
+});
+
+
 //Edit
   exports.update = catchAsyncErrors(async (req, res, next) => {
     req.body.updated_at = Date.now();
@@ -124,7 +152,7 @@ const result = await cloudinary.v2.uploader.upload(req.body.image, {
         new: true,
         runValidators: true,
       });
-    await Album.aggregate([
+    /* await Album.aggregate([
       {
         $lookup: {
           from: "producer",
@@ -147,7 +175,7 @@ const result = await cloudinary.v2.uploader.upload(req.body.image, {
           producer: mongoose.Types.ObjectId(req.body.producer),
         },
       },
-    ]);
+    ]); */
     // res.status(200).json({
     //   success: true,
     //   message: `Album successfully updated`,

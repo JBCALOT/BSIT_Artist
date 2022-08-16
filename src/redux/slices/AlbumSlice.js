@@ -5,7 +5,22 @@ export const GetAllAlbum = createAsyncThunk(
     "album/all",
     async (obj, { rejectWithValue }) => {
       try {
-        const response = await axios.get(`${process.env.REACT_APP_API_HOST}api/album/`,obj,);
+        const response = await axios.post(`${process.env.REACT_APP_API_HOST}api/album/`,obj,
+        {
+          headers: { Authorization: "Bearer " + localStorage.getItem("token")},
+        });
+        return response.data;
+      } catch (error) {
+        return rejectWithValue(error.response.data.message);
+      }
+    }
+  );
+
+  export const GetAllAlbumGuest = createAsyncThunk(
+    "albumguest/all",
+    async (obj, { rejectWithValue }) => {
+      try {
+        const response = await axios.get(`${process.env.REACT_APP_API_HOST}api/album/guest/`,obj,);
         return response.data;
       } catch (error) {
         return rejectWithValue(error.response.data.message);
@@ -89,6 +104,17 @@ export const GetAllAlbum = createAsyncThunk(
         state.album = action.payload.album;
       },
       [GetAllAlbum.rejected]: (state, action) => {
+        state.loading = false;
+        state.errors = action.payload;
+      },
+      [GetAllAlbumGuest.pending]: (state) => {
+        state.loading = true;
+      },
+      [GetAllAlbumGuest.fulfilled]: (state, action) => {
+        state.loading = false;
+        state.album = action.payload.album;
+      },
+      [GetAllAlbumGuest.rejected]: (state, action) => {
         state.loading = false;
         state.errors = action.payload;
       },

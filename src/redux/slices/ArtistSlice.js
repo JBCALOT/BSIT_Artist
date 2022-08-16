@@ -5,7 +5,22 @@ export const GetAllArtist = createAsyncThunk(
     "artist/all",
     async (obj, { rejectWithValue }) => {
       try {
-        const response = await axios.get(`${process.env.REACT_APP_API_HOST}api/artist/`,obj,);
+        const response = await axios.post(`${process.env.REACT_APP_API_HOST}api/artist/`,obj,
+        {
+          headers: { Authorization: "Bearer " + localStorage.getItem("token") },
+        });
+        return response.data;
+      } catch (error) {
+        return rejectWithValue(error.response.data.message);
+      }
+    }
+  );
+
+  export const GetAllArtistGuest = createAsyncThunk(
+    "artistguest/all",
+    async (obj, { rejectWithValue }) => {
+      try {
+        const response = await axios.get(`${process.env.REACT_APP_API_HOST}api/artist/guest/`,obj,);
         return response.data;
       } catch (error) {
         return rejectWithValue(error.response.data.message);
@@ -107,6 +122,17 @@ export const GetAllArtist = createAsyncThunk(
         state.loading = false;
         state.errors = action.payload;
       },
+      [GetAllArtistGuest.pending]: (state) => {
+        state.loading = true;
+      },
+      [GetAllArtistGuest.fulfilled]: (state, action) => {
+        state.loading = false;
+        state.artist = action.payload.artist;
+      },
+      [GetAllArtistGuest.rejected]: (state, action) => {
+        state.loading = false;
+        state.errors = action.payload;
+      },
       [AddArtist.pending]: (state) => {
         state.loading = true;
       },
@@ -147,7 +173,7 @@ export const GetAllArtist = createAsyncThunk(
         );
         state.loading = false;
         state.success = action.payload.success;
-        state.admin = new_artist;
+        state.artist = new_artist;
         state.errors = null;
       },
       [DeleteArtist.rejected]: (state, action) => {

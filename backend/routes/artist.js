@@ -6,11 +6,13 @@ const {
     store,
     update,
     getAll,
+    getAllGuest,
     dlt,
     getDetails,
 } = require("../controller/ArtistController");
 
-router.route("/").get(getAll);
+router.route("/guest/").get(getAllGuest);
+router.route("/").post(authenthicationCheck,getAll);
 router.route("/store").post(authenthicationCheck, store);
 router.route("/update/:id").patch(authenthicationCheck, update, getAll);
 router.route("/dlt/:id").delete(authenthicationCheck,dlt);

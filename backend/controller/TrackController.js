@@ -90,7 +90,7 @@ exports.getAll = catchAsyncErrors(async (req, res, next) => {
       track,
     }); */
     const status = {
-      message: "Track Updated!",
+      message: "Song Track Updated!",
       success: true,
     }
     req.body.status = status

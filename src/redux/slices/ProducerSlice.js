@@ -5,7 +5,10 @@ export const GetAllProducer = createAsyncThunk(
     "producers/all",
     async (obj, { rejectWithValue }) => {
       try {
-        const response = await axios.get(`${process.env.REACT_APP_API_HOST}api/producer/`,obj,);
+        const response = await axios.post(`${process.env.REACT_APP_API_HOST}api/producer/`,obj,
+        {
+          headers: { Authorization: "Bearer " + localStorage.getItem("token") },
+        });
         return response.data;
       } catch (error) {
         return rejectWithValue(error.response.data.message);
@@ -132,7 +135,7 @@ export const GetAllProducer = createAsyncThunk(
         );
         state.loading = false;
         state.success = action.payload.success;
-        state.admin = new_prod;
+        state.producer = new_prod;
         state.errors = null;
       },
       [DeleteProducer.rejected]: (state, action) => {
