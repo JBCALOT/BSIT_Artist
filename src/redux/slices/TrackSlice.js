@@ -68,6 +68,7 @@ export const GetAllTracks = createAsyncThunk(
     //input_errors: null,
     errors: null,
     success: null,
+    longtrack: null,
   };
 
   const TrackSlice = createSlice({
@@ -88,6 +89,7 @@ export const GetAllTracks = createAsyncThunk(
       [GetAllTracks.fulfilled]: (state, action) => {
         state.loading = false;
         state.track = action.payload.track;
+        state.longtrack = action.payload.longtrack;
       },
       [GetAllTracks.rejected]: (state, action) => {
         state.loading = false;

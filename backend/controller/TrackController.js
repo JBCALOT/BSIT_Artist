@@ -54,7 +54,6 @@ exports.getAll = catchAsyncErrors(async (req, res, next) => {
             },
           }, 
       ]);    
-      //console.log(track);
       const longtrack = await Track.findOne({}).sort({
         duration : -1
       }); 
