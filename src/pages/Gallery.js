@@ -22,8 +22,11 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import ArrowBackIosRoundedIcon from '@mui/icons-material/ArrowBackIosRounded';
 import moment from "moment";
+import Searchbar from "../assets/Searchbar";
 //import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
+   
+ 
 
 const Gallery = () => {
 const dispatch = useDispatch();
@@ -82,6 +85,7 @@ return (
         minHeight: "100vh",
       }}>
 <CssBaseline />
+<Searchbar/> 
     <Container maxWidth="xl">
     <IconButton component={StyledLink} to="/" size="small" color="primary">
           <ArrowBackIosRoundedIcon/>Back to Index
@@ -168,6 +172,8 @@ return (
       </Container>
 
       <Container sx={{}} maxWidth="xl">
+       
+        
         <Typography
           variant="h4"
           sx={{ textTransform: "capitalize", color: "#008037", mb:4,mt:4 }}
@@ -230,6 +236,8 @@ return (
 
     </Container>
 </Box>
+
+
 );
 
 };

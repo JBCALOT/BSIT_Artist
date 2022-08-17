@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import {
     Alert,
     AlertTitle,
@@ -155,13 +155,32 @@ const LoginUser = () => {
                 <StyledLink to="/register">
                   Don't have an account? <u>Sign Up</u>
                 </StyledLink>
+                </Grid>
+                </Grid>
+
+
+            <Grid container>
+              <Grid item>
+                <StyledLink to="/forgot">
+                  Forgot Password
+                </StyledLink>
               </Grid>
             </Grid>
           </Box>
         </Container>
+
+      {/* <container>
+          <p className = "forgot-password">
+            <Link to={'/forgot'}>Forgot Password</Link>
+          </p>
+
+      </container> */}
+
       </Box>
+      
     );
   };
+  
   
   //export { LoginUser };
 export default LoginUser;

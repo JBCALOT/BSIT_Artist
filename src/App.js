@@ -11,8 +11,12 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import UserOutlet from "./pages/outlet/UserOutlet";
 import { GetAuthDetails } from "./redux/slices/UserSlice";
+import { Forgot } from './pages/ForgotPass';
+
+
 
 function App() {
+
   const dispatch = useDispatch();
   const { loading } = useSelector((state) => state.user);
 
@@ -32,12 +36,17 @@ function App() {
         <Route path="/admin/*" element={<UserOutlet />} />
         <Route path="/login" element={<Login/>}/>
         <Route path="/register" element={<Register/>}/>
+        <Route path="/forgot" element={<Forgot/>}/>
       </Routes>
     </Router>
     </ThemeProvider>
     )}
-    </>
+ 
+
+  </>
+
   );
+
 }
 
 export default App;
