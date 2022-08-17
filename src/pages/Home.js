@@ -90,7 +90,7 @@ return (
 <Box  sx={{
         bgcolor: "#021707",
         pb: 5,
-        pt: 5,
+        pt: 7,
         minHeight: "100vh",
       }}>
 <CssBaseline />
@@ -170,8 +170,9 @@ return (
               pt: "100%",
             }}
             image={a}
+            alt="longest-track-duration"
             />
-            <Typography sx={{color:"white", mt:2}}>{longtrack ? longtrack.track_name + " - " + longtrack.duration.minutes + ":" + longtrack.duration.seconds: null}</Typography>
+            <Typography sx={{color:"white", mt:2}}>{longtrack ? longtrack.track_name + " - " + longtrack.duration.minutes + ":" + longtrack.duration.seconds + " minutes" : null}</Typography>
 
           </Card>
         </Grid>
