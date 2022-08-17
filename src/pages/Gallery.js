@@ -16,8 +16,8 @@ import { styled } from '@mui/material/styles';
 import { StyledLink } from "../assets/styles";
 import { Container } from "@mui/system";
 import CssBaseline from "@mui/material/CssBaseline";
-import {GetAllArtist} from "../redux/slices/ArtistSlice";
-import {GetAllAlbum} from "../redux/slices/AlbumSlice";
+import {GetAllArtistGuest} from "../redux/slices/ArtistSlice";
+import {GetAllAlbumGuest} from "../redux/slices/AlbumSlice";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import ArrowBackIosRoundedIcon from '@mui/icons-material/ArrowBackIosRounded';
@@ -35,6 +35,11 @@ const [expanded, setExpanded] = useState(false);
     setExpanded(!expanded);
   };
 
+  const [expanda, setAlbumExpanded] = useState(false);
+  const handleExpandAlbum = () => {
+    setAlbumExpanded(!expanda);
+  };
+
   useEffect(() => {
     document.title = "BSIT | Gallery";
     return () => {};
@@ -49,11 +54,11 @@ const {album} = useSelector(
   );
 
   useEffect(() => {
-    dispatch(GetAllAlbum());
+    dispatch(GetAllAlbumGuest());
     return () => {};
   }, [dispatch]);
   useEffect(() => {
-    dispatch(GetAllArtist());
+    dispatch(GetAllArtistGuest());
     return () => {};
   }, [dispatch]);
 
@@ -67,6 +72,17 @@ const {album} = useSelector(
   });
 
   const ExpandMore = styled((props) => {
+    const { expand, ...other } = props;
+    return <IconButton {...other} />;
+  })(({ theme, expand }) => ({
+    transform: !expand ? 'rotate(0deg)' : 'rotate(180deg)',
+    marginLeft: 'auto',
+    transition: theme.transitions.create('transform', {
+      duration: theme.transitions.duration.shortest,
+    }),
+  }));
+
+  const ExpandAlbum = styled((props) => {
     const { expand, ...other } = props;
     return <IconButton {...other} />;
   })(({ theme, expand }) => ({
@@ -206,17 +222,17 @@ return (
                       image={alb.image && Array.isArray(alb.image) ? alb.image.length > 0 ? alb.image[0].url : "https://via.placeholder.com/400/008307?text=Image+Placeholder" : null}
                       
                     />
-                  <ExpandMore
-                    expand={expanded}
-                    onClick={handleExpandClick}
-                    aria-expanded={expanded}
+                  <ExpandAlbum
+                    expand={expanda}
+                    onClick={handleExpandAlbum}
+                    aria-expanded={expanda}
                     aria-label="show more"
                   >
                     <span class="material-icons">expand_more</span>
-                    <Typography variant="h6" sx={{textAlign: "center", mt:1, color: "#008037", transform: !expanded ? 'rotate(0deg)' : 'rotate(180deg)',}}>{alb.album_name}</Typography>
+                    <Typography variant="h6" sx={{textAlign: "center", mt:1, color: "#008037", transform: !expanda ? 'rotate(0deg)' : 'rotate(180deg)',}}>{alb.album_name}</Typography>
                     
-                  </ExpandMore>
-            <Collapse in={expanded} timeout="auto" unmountOnExit>
+                  </ExpandAlbum>
+            <Collapse in={expanda} timeout="auto" unmountOnExit>
             <CardContent sx={{ flexGrow: 1}}>
                 <Grid item xs={12}>
                 <Typography variant="h6" sx={{ textAlign: "center", mt: 2, color: "#a6a6a6", fontSize: "15px" }}>Duration:</Typography>

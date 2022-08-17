@@ -58,6 +58,15 @@ exports.getAll = catchAsyncErrors(async (req, res, next) => {
     });
   });
 
+  //Get All artist for guest
+exports.getAllGuest = catchAsyncErrors(async (req, res) => {
+  const artist = await Artist.find();
+  return res.status(200).json({
+    success: true,
+    artist,
+  });
+});
+
 //Edit
 exports.update = catchAsyncErrors(async (req, res, next) => {
   req.body.updated_at = Date.now();

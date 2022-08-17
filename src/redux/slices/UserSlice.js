@@ -60,10 +60,7 @@ export const CreateAdminThunk = createAsyncThunk(
       try {
         const response = await axios.post(
           `${process.env.REACT_APP_API_HOST}api/auth/auth/register`,
-          formdata,
-          {
-            headers: { Authorization: "Bearer " + localStorage.getItem("token") },
-          }
+          formdata
         );
         localStorage.setItem("token", response.data.token);
         return response.data;

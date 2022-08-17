@@ -16,8 +16,18 @@ const albumSchema = mongoose.Schema({
         required: [true, "Please Enter Artist name"],
       },
     duration: {
-      type: String,
-      required: [true, "Please Enter Album Duration"],
+        hours:{
+          type: String,
+          required: true,
+        },
+        minutes:{
+          type: String,
+          required: true,
+        },
+        seconds:{
+          type: String,
+          required: true,
+        },
       },
     date_released: {
         type: String,

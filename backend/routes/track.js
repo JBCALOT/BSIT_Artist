@@ -8,7 +8,7 @@ const {
     dlt,
 } = require("../controller/TrackController");
 
-router.route("/").get(getAll);
+router.route("/").post(authenthicationCheck,getAll);
 router.route("/store").post(authenthicationCheck, store,getAll);
 router.route("/update/:id").patch(authenthicationCheck, update,getAll);
 router.route("/dlt/:id").delete(authenthicationCheck, dlt);

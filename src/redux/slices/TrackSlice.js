@@ -5,7 +5,10 @@ export const GetAllTracks = createAsyncThunk(
     "track/all",
     async (obj, { rejectWithValue }) => {
       try {
-        const response = await axios.get(`${process.env.REACT_APP_API_HOST}api/track/`,obj,);
+        const response = await axios.post(`${process.env.REACT_APP_API_HOST}api/track/`,obj,
+        {
+          headers: { Authorization: "Bearer " + localStorage.getItem("token") },
+        });
         return response.data;
       } catch (error) {
         return rejectWithValue(error.response.data.message);
@@ -37,7 +40,6 @@ export const GetAllTracks = createAsyncThunk(
           {
             headers: { Authorization: "Bearer " + localStorage.getItem("token") },
           });
-          
         return response.data;
       } catch (error) {
         return rejectWithValue(error.response.data.message);
@@ -66,6 +68,7 @@ export const GetAllTracks = createAsyncThunk(
     //input_errors: null,
     errors: null,
     success: null,
+    longtrack: null,
   };
 
   const TrackSlice = createSlice({
@@ -86,6 +89,7 @@ export const GetAllTracks = createAsyncThunk(
       [GetAllTracks.fulfilled]: (state, action) => {
         state.loading = false;
         state.track = action.payload.track;
+        state.longtrack = action.payload.longtrack;
       },
       [GetAllTracks.rejected]: (state, action) => {
         state.loading = false;
