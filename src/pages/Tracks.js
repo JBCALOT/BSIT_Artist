@@ -1,17 +1,12 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
 import CssBaseline from "@mui/material/CssBaseline";
 import {
   Alert,
   AlertTitle,
-    Box,
-    Card,
-    CardMedia, 
-    CardActions, 
+    Box, 
     Container,
     Dialog,
-    DialogTitle,
     FormControl,
     Grid,
     InputLabel,
@@ -29,16 +24,12 @@ import {
   clearSuccess
  } from "../redux/slices/TrackSlice";
  import {GetAllAlbum} from "../redux/slices/AlbumSlice";
- import {GetAllArtist, GetArtistDetails, } from "../redux/slices/ArtistSlice";
+ import {GetAllArtist} from "../redux/slices/ArtistSlice";
  import ArtistInDetails from "./CRUD/ViewArtistInTrack";
  import AlbumInDetails from "./CRUD/ViewAlbumInTrack";
 import EditTrack from "./CRUD/EditTrack";
 import Delete from "./CRUD/Delete";
 import Appbar from "../assets/Appbar";
-import DateAdapterMoment from "@mui/lab/AdapterMoment";
-import LocalizationProvider from "@mui/lab/LocalizationProvider";
-import TimePicker from "@mui/lab/TimePicker";
-import moment from "moment";
 
 const Track = () => {
 
@@ -54,7 +45,6 @@ const Track = () => {
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
-  const params = useParams();
 
   const { loading, track, errors, success } = useSelector(
     (state) => state.track
@@ -69,11 +59,9 @@ const Track = () => {
 
   const dispatch = useDispatch();
 
-const hrs = ["01", "02", "03", "04", "05","06","07","08","09","10","11", "12", "13", "14", "15","16","17","18","19","20","21", "22", "23"];
 const mins = ["01", "02", "03", "04", "05","06","07","08","09","10","11", "12", "13", "14", "15","16","17","18","19","20"];
-const secs = ["01", "02", "03", "04", "05","06","07","08","09","10","11", "12", "13", "14", "15","16","17","18","19","20","21", "22", "23", "24", "25","26","27","28","29","30","31", "32", "33", "34", "35","36","37","38","39","40","41", "42", "43", "44", "45","46","47","48","49","50","51", "52", "53", "54", "55","56","57","58","59"];
-
-const genre = ["Pop", "Country", "R&B", "Rock", "Folk", "Jazz", "Hip-Hop/Rap", "Classical", "Techno", "EDM", "Metal", "Indie", "K-pop", "Reggae", "A capella", "Gospel"];
+const secs = ["00", "01", "02", "03", "04", "05","06","07","08","09","10","11", "12", "13", "14", "15","16","17","18","19","20","21", "22", "23", "24", "25","26","27","28","29","30","31", "32", "33", "34", "35","36","37","38","39","40","41", "42", "43", "44", "45","46","47","48","49","50","51", "52", "53", "54", "55","56","57","58","59"];
+const genre = ["Alternative", "Acoustic","Pop", "Country", "R&B", "Rock", "Folk", "Jazz", "Hip-Hop/Rap", "Classical", "Techno", "EDM", "Metal", "Indie", "J-pop","K-pop", "Reggae", "A capella", "Gospel", "Lo-fi"];
 
 //Datagrid
 const columns = [
@@ -84,9 +72,6 @@ const columns = [
     headerAlign: "center",
     align: "center",
     minWidth: 200,
-    /* valueGetter: (cellValues) => {
-      return cellValues.row.album[0].album_name;
-    },*/
     renderCell: (cellValues) => {
       return (
        <><AlbumInDetails
@@ -113,11 +98,7 @@ const columns = [
           data={cellValues.row}
           startIcon={<span class="material-icons-round">info</span>}/>
          <Typography>{cellValues.row.artist[0].f_name + " " + cellValues.row.artist[0].l_name}</Typography></>
-        //<StyledButton component={StyledLink} to={`/artist/${artist._id}`}>artist</StyledButton >
-        //<StyledButton onClick={artistInfo}>artist</StyledButton >
-        //<ArtistInDetails params={`${cellValues.row.id}`}/>
-        //<StyledLink to={`/artist/${artist._id}`}>artist</StyledLink>
-    );
+        );
   },
     sortComparator: (v1, v2) => v1.localeCompare(v2),
   }, 

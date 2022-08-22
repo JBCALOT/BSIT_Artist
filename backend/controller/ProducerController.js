@@ -24,7 +24,7 @@ exports.getAll = catchAsyncErrors(async (req, res, next) => {
   });       
 
  
-//Edit
+//Edit Producer
 exports.update = catchAsyncErrors(async (req, res, next) => { 
     await Producer.findByIdAndUpdate(req.params.id, req.body, {
       new: true,
@@ -32,7 +32,7 @@ exports.update = catchAsyncErrors(async (req, res, next) => {
     });
     const producer = await Producer.find();
     return res.status(200).json({
-      success: "Producer has been updated!",
+      success: `Producer has been updated!`,
       producer,
     });
   });

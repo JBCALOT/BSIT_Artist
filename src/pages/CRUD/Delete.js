@@ -15,46 +15,46 @@ import { DeleteProducer } from "../../redux/slices/ProducerSlice";
 import { DeleteTrack } from "../../redux/slices/TrackSlice";
 import { DltButton } from "../../assets/styles";
 
-const Delete = ({ id, name, collection, ...rest }) => {
-    const [OpenModal, setOpenModal] = useState(false);
-    const dispatch = useDispatch();
-    const navigate = useNavigate();
+const Delete = ({ id, name, collection }) => {
+  const [OpenModal, setOpenModal] = useState(false);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   
-    const dialogOpen = () => {
-      setOpenModal(true);
-    };
-    const handleClose = () => {
-      setOpenModal(false);
-    };
+  const dialogOpen = () => {
+    setOpenModal(true);
+  };
+  const handleClose = () => {
+    setOpenModal(false);
+  };
   
     const handleYes = () => {
       switch (collection) {
         case "producers":
           dispatch(DeleteProducer({ id: id }));
-          navigate("/producer");
+          navigate("/admin/producer");
           break;
         case "artists":
           dispatch(DeleteArtist({ id: id }));
-          navigate("/artist");
+          navigate("/admin/artist");
           break;
         case "albums":
           dispatch(DeleteAlbum({ id: id }));
-          navigate("/album");
+          navigate("/admin/album");
           break;
         case "tracks":
           dispatch(DeleteTrack({ id: id }));
-          navigate("/track");
+          navigate("/admin/track");
           break;
         /* case "rating":
           dispatch(DeleteRating({ id: id }));
-          navigate("/rating");
+          navigate("/admin/rating");
           break; */
-  
         default:
           break;
       }
       setOpenModal(false);
     };
+    
     return (
       <>
         <DltButton

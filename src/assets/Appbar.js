@@ -41,14 +41,13 @@ const [anchorEl, setAnchorEl] = React.useState(null);
             <MenuIcon />
           </IconButton>
           <Menu
-        anchorEl={anchorEl}
-        open={open}
-        onClose={handleClose}
-        MenuListProps={{
-          'aria-labelledby': 'basic-button',
-        }}
-        
-      >
+            anchorEl={anchorEl}
+            open={open}
+            onClose={handleClose}
+            MenuListProps={{
+            'aria-labelledby': 'basic-button',
+          }}
+        > 
         <MenuItem onClick={handleClose} component={StyledLink} to={"/admin"}>
           <ListItemIcon><HomeRounded sx={{color: "#008037"}}/></ListItemIcon>
           <ListItemText sx={{pl:1}}> Home</ListItemText>

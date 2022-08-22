@@ -40,9 +40,9 @@ exports.store = catchAsyncErrors(async (req, res, next) => {
     }
     req.body.image = imageLinks;
   }
-  let album;
-  await Album.create(req.body);
-  await Album.aggregate([
+  
+  const album = await Album.create(req.body);
+  /* await Album.aggregate([
       {
         $lookup: {
           from: "producer",
@@ -65,14 +65,16 @@ exports.store = catchAsyncErrors(async (req, res, next) => {
           producer: mongoose.Types.ObjectId(req.body.producer),
         },
       },
-    ]);
-    res.status(200).json({
-      success: "Album Created!",
-      album,
-    });
+    ]); */
+    const status = {
+      message: `Album Added`,
+      success: true,
+    }
+    req.body.status = status
+        next();
   });
 
-  //Get All album
+//Get All album
 exports.getAll = catchAsyncErrors(async (req, res, next) => {
     //await Album.find();
     const album = await Album.aggregate([
@@ -104,7 +106,7 @@ return res.status(200).json({
     });
   });
 
-  //Get All album for guest
+//Get All album for guest
 exports.getAllGuest = catchAsyncErrors(async (req, res, next) => {
   //await Album.find();
   const album = await Album.aggregate([
@@ -132,7 +134,7 @@ exports.getAllGuest = catchAsyncErrors(async (req, res, next) => {
 });
 
 
-//Edit
+//Edit Album
   exports.update = catchAsyncErrors(async (req, res, next) => {
     req.body.updated_at = Date.now();
     //let image = [];
@@ -191,10 +193,10 @@ const result = await cloudinary.v2.uploader.upload(req.body.image, {
        success: `Album successfully updated`,
        album,
      });
-
+     next();
   });
 
-//Delete
+//Delete Album
 exports.dlt = catchAsyncErrors(async (req, res, next) => {
     const album = await Album.findById(req.params.id);
     await album.remove();
@@ -229,4 +231,3 @@ exports.dlt = catchAsyncErrors(async (req, res, next) => {
       album,
     });
   });
-

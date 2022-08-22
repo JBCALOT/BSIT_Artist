@@ -17,12 +17,11 @@ import { EditButton, StyledButton, StyledTextField } from "../../assets/styles";
 import { 
   EditAlbum,
  } from "../../redux/slices/AlbumSlice";
- import {GetAllProducer} from "../../redux/slices/ProducerSlice";
- import {GetAllArtist} from "../../redux/slices/ArtistSlice";
+import {GetAllProducer} from "../../redux/slices/ProducerSlice";
+import {GetAllArtist} from "../../redux/slices/ArtistSlice";
 import DateAdapterMoment from "@mui/lab/AdapterMoment";
 import LocalizationProvider from "@mui/lab/LocalizationProvider";
 import DatePicker from "@mui/lab/DatePicker";
-import TimePicker from "@mui/lab/TimePicker";
 import moment from "moment";
 
 const EditAlbumm = ({data, id}) => {
@@ -45,7 +44,6 @@ const EditAlbumm = ({data, id}) => {
 const hrs = ["00", "01", "02", "03", "04", "05","06","07","08","09","10","11", "12", "13", "14", "15","16","17","18","19","20","21", "22", "23"];
 const mins = ["00", "01", "02", "03", "04", "05","06","07","08","09","10","11", "12", "13", "14", "15","16","17","18","19","20","21", "22", "23", "24", "25","26","27","28","29","30","31", "32", "33", "34", "35","36","37","38","39","40","41", "42", "43", "44", "45","46","47","48","49","50","51", "52", "53", "54", "55","56","57","58","59"];
 const secs = ["00", "01", "02", "03", "04", "05","06","07","08","09","10","11", "12", "13", "14", "15","16","17","18","19","20","21", "22", "23", "24", "25","26","27","28","29","30","31", "32", "33", "34", "35","36","37","38","39","40","41", "42", "43", "44", "45","46","47","48","49","50","51", "52", "53", "54", "55","56","57","58","59"];
-
 
 const [values, setvalues] = useState({
   album_name: data.album_name,
@@ -97,7 +95,6 @@ const onChange = (e) => {
     reader.readAsDataURL(e.target.files[0]);
   });
 };
-
 
 useEffect(() => {
   dispatch(GetAllArtist());
@@ -257,7 +254,7 @@ return(
                       name="hours"
                       id="hours"
                       value={values.hours}
-                      onChange={onChange}
+                      onChange={handleChange}
                     >
                         {hrs.map(info => (
                       <MenuItem value={info}>{info}</MenuItem>
@@ -278,7 +275,7 @@ return(
                       name="minutes"
                       id="minutes"
                       value={values.minutes}
-                      onChange={onChange}
+                      onChange={handleChange}
                     >
                         {mins.map(info => (
                       <MenuItem value={info}>{info}</MenuItem>
@@ -299,7 +296,7 @@ return(
                       name="seconds"
                       id="seconds"
                       value={values.seconds}
-                      onChange={onChange}
+                      onChange={handleChange}
                     >
                         {secs.map(info => (
                       <MenuItem value={info}>{info}</MenuItem>

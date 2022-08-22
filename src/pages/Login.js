@@ -15,63 +15,60 @@ import { EditButton, LoginButton, StyledTextField, StyledLink, } from "../assets
 import {LoginUserThunk, clearSuccess, clearError } from "../redux/slices/UserSlice";
 
 const LoginUser = () => {
-    const { loading, isAuthenticated, errors, success } =
-      useSelector((state) => state.user);
+const { loading, isAuthenticated, errors, success } = useSelector((state) => state.user);
+const dispatch = useDispatch();
+const navigate = useNavigate();
+const [values, setvalues] = useState({
+  email: "",
+  password: "",
+});
+
+  useEffect(() => {
+      if (isAuthenticated){
+          navigate("/admin");
+      }
+    return () => {};
+  }, [isAuthenticated, navigate]);
+
+const onChange = (e) => {
+  setvalues({ ...values, [e.target.name]: e.target.value });
+};
+const onClose = (e) => {
+  dispatch(clearSuccess());
+  dispatch(clearError());
+};
+
+const onSubmit = (e) => {
+e.preventDefault();
+const formData = new FormData();
+  formData.append("email", values.email);
+  formData.append("password", values.password);
+  dispatch(LoginUserThunk(formData));
+};
   
-    const dispatch = useDispatch();
-    const navigate = useNavigate();
-    const [values, setvalues] = useState({
-      email: "",
-      password: "",
-    });
-
-    useEffect(() => {
-        if (isAuthenticated){
-            navigate("/admin");
-        }
-      return () => {};
-    }, [isAuthenticated, navigate]);
-
-    const onChange = (e) => {
-      setvalues({ ...values, [e.target.name]: e.target.value });
-    };
-    const onClose = (e) => {
-      dispatch(clearSuccess());
-      dispatch(clearError());
-    };
-
-    const onSubmit = (e) => {
-      e.preventDefault();
-      const formData = new FormData();
-      formData.append("email", values.email);
-      formData.append("password", values.password);
-      dispatch(LoginUserThunk(formData));
-      //dispatch(LoginAdminThunk(formData));
-    };
-  
-    return (
-      <Box
-        sx={{
-            background: "linear-gradient(black, #021707, #008037)",
-            pt: 6,
-            pb: 5,
-            minHeight: "100vh",
-        }}
-      >
+return (
+  <Box
+    sx={{
+        background: "linear-gradient(black, #021707, #008037)",
+        pt: 6,
+        pb: 5,
+        minHeight: "100vh",
+      }}
+    >
         
-        {success && (
-          <Snackbar
-            open={success}
-            autoHideDuration={3000}
-            onClose={onClose}
-            name="sucess"
-          >
-            <Alert severity="success" variant="filled">
-              <AlertTitle>Success</AlertTitle>
-              {success}
-            </Alert>
-          </Snackbar>
-        )}
+      {success && (
+        <Snackbar
+          open={success}
+          autoHideDuration={3000}
+          onClose={onClose}
+          name="sucess"
+        >
+          <Alert severity="success" variant="filled">
+            <AlertTitle>Success</AlertTitle>
+            {success}
+          </Alert>
+        </Snackbar>
+      )}
   
         {errors && (
           <Snackbar
@@ -86,9 +83,7 @@ const LoginUser = () => {
             </Alert>
           </Snackbar>
         )}
-        {/* <BackBtn component={StyledLink} to="/">
-          Back to Homepage
-        </BackBtn> */}
+        
         <Container component="main" sx={{ mt: 8, mb: 2 }} maxWidth="sm">
           <Box
             sx={{
@@ -128,7 +123,6 @@ const LoginUser = () => {
                   type="password"
                   onChange={onChange}
                   id="password"
-                  autoComplete="current-password"
                 />
             <Grid item sx={{textAlign: "center", p: 3}}>
                 <span align="center" class="material-icons-round">music_note</span>
@@ -163,5 +157,4 @@ const LoginUser = () => {
     );
   };
   
-  //export { LoginUser };
 export default LoginUser;

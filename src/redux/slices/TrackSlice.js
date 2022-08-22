@@ -65,7 +65,6 @@ export const GetAllTracks = createAsyncThunk(
   const initialState = {
     track: null,
     loading: false,
-    //input_errors: null,
     errors: null,
     success: null,
     longtrack: null,

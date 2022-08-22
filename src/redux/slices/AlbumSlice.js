@@ -79,7 +79,6 @@ export const GetAllAlbum = createAsyncThunk(
   const initialState = {
     album: null,
     loading: false,
-    //input_errors: null,
     errors: null,
     success: null,
     long: null,
@@ -148,7 +147,6 @@ export const GetAllAlbum = createAsyncThunk(
         state.success = null;
         state.errors = action.payload;
       },
-
       [DeleteAlbum.pending]: (state) => {
         state.loading = true;
       },

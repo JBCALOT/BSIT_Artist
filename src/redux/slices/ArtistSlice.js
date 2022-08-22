@@ -94,7 +94,6 @@ export const GetAllArtist = createAsyncThunk(
   const initialState = {
     artist: null,
     loading: false,
-    //input_errors: null,
     errors: null,
     success: null,
   };

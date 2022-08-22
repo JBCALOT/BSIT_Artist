@@ -34,7 +34,6 @@ import Appbar from "../assets/Appbar";
 import DateAdapterMoment from "@mui/lab/AdapterMoment";
 import LocalizationProvider from "@mui/lab/LocalizationProvider";
 import DatePicker from "@mui/lab/DatePicker";
-import TimePicker from "@mui/lab/TimePicker";
 import moment from "moment";
 
 const Album = () => {
@@ -227,7 +226,6 @@ const handleSubmit = (e) => {
   formData.append("duration.seconds", values.seconds);  
   formData.append("date_released", values.date_released);
   image.forEach((image) => {
-    //* Use append() here instead of set(). in order not replace the current value of the image...
     formData.append("image", image);
   });
   dispatch(AddAlbum({data: formData}));
@@ -249,12 +247,12 @@ useEffect(() => {
 }, [dispatch]);
 
 return(
-<Box  sx={{
-        background: "linear-gradient(black, #021707, #008037)",
-        pt: 5,
-        pb: 5,
-        minHeight: "100vh",
-      }}>
+<Box sx={{
+      background: "linear-gradient(black, #021707, #008037)",
+      pt: 5,
+      pb: 5,
+      minHeight: "100vh",
+    }}>
 <CssBaseline />
 
 {success && (
@@ -426,32 +424,6 @@ return(
                   </FormControl>
                 </Grid>    
 
-                {/* <Grid item xs={12} sm={12} md={6}>
-                 <LocalizationProvider dateAdapter={DateAdapterMoment}>
-                  <TimePicker
-                    ampm={false}
-                    openTo="hours"
-                    views={['hours', 'minutes', 'seconds']}
-                    inputFormat="HH:mm:ss"
-                    mask="__:__:__"
-                    label="Duration"
-                    name="duration"
-                    value={moment(values.duration)}
-                    onChange={(newDate) =>
-                      setvalues({
-                        ...values,
-                        duration: newDate.toDate().toISOString(),
-                      })
-                    }
-                    renderInput={(params) => 
-                    <StyledTextField {...params}
-                    fullWidth
-                    required
-                    size="small" />}
-                    />
-                  </LocalizationProvider>
-                  </Grid> */}
-
           <Grid item xs={12} sm={12} md={6}>
               <LocalizationProvider dateAdapter={DateAdapterMoment}>
                 <DatePicker
@@ -480,7 +452,7 @@ return(
               </LocalizationProvider>
             </Grid>
 
-              <Grid item xs={12} sm={12} md={6} sx={{flexDirection:"row"}}>
+            <Grid item xs={12} sm={12} md={6} sx={{flexDirection:"row"}}>
               <Grid>
                   <FormControl
                     required
@@ -541,7 +513,6 @@ return(
                   </FormControl>
                 </Grid>
               </Grid>
-
               
             <Grid item xs={12} sm={12} md={6}>
                 <StyledButton variant="contained" component="label">
@@ -590,11 +561,9 @@ return(
         </Box>
       </Dialog>
       <br />
-
-</Container>
+  </Container>
 </Box>
 );
 };
-
 
 export default Album;

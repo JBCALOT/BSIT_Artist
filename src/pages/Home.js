@@ -52,7 +52,7 @@ const Dashboard = () => {
     title: "Producers",
     desc: "Manage Producers Information...",
     image: c,
-    alt: "Producer",
+    alt: "Producers",
     to: "/admin/producer",
   },
   {
@@ -75,15 +75,7 @@ const Dashboard = () => {
   image: f,
   alt: "Artists",
   to: "/admin/artist",
-},
-
-/* {
-  title: "Gallery",
-  desc: "View Artist and Album gallery",
-  image: c,
-  alt: "gallery",
-  to: "#",
-}, */
+}
 ];
 
 return (
@@ -183,7 +175,7 @@ return (
       <Divider/>
       <br/>
 
-        <Container sx={{}} maxWidth="xl">
+      <Container sx={{}} maxWidth="xl">
         <Grid container spacing={3}>
           {cards.map((card) => (
             <Grid item key={card} xs={12} sm={6} md={3} lg={3} xl={3}>
@@ -225,6 +217,5 @@ return (
     </Container>
 </Box>
 );
-
 };
 export default Dashboard;

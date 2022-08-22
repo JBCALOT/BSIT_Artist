@@ -4,7 +4,6 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { ThemeProvider } from "@mui/material";
 import { theme } from "./assets/theme";
 import { useEffect } from "react";
-
 import Gallery from "./pages/Gallery";
 import Index from "./pages/Index";
 import Login from "./pages/Login";

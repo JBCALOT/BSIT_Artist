@@ -1,5 +1,4 @@
-import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
 import {
     Box, 
     Typography, 
@@ -38,8 +37,6 @@ const Index = () => {
   to: "/gallery",
 },
 ];
-
-const dispatch = useDispatch();
 
 return (
 
@@ -98,10 +95,8 @@ return (
           ))}
         </Grid>
       </Container>
-
     </Container>
 </Box>
 );
-
 };
 export default Index;

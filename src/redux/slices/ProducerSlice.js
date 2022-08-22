@@ -67,7 +67,6 @@ export const GetAllProducer = createAsyncThunk(
   const initialState = {
     producer: null,
     loading: false,
-    //input_errors: null,
     errors: null,
     success: null,
   };

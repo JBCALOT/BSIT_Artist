@@ -34,28 +34,28 @@ const onClose = (e) => {
     dispatch(clearError());
 };
 
-    const onSubmit = (e) => {
-      e.preventDefault();
-      if (values.password === values.c_password) {
-      const formData = new FormData();
-      formData.append("username", values.username);
-      formData.append("email", values.email);
-      formData.append("password", values.password);
-      dispatch(CreateAdminThunk(formData));
-    } else {
-        setpassword_error("Passwords do not match! Please check your input");
-      }
-    };
+  const onSubmit = (e) => {
+    e.preventDefault();
+    if (values.password === values.c_password) {
+    const formData = new FormData();
+    formData.append("username", values.username);
+    formData.append("email", values.email);
+    formData.append("password", values.password);
+    dispatch(CreateAdminThunk(formData));
+  } else {
+      setpassword_error("Passwords do not match! Please check your input");
+    }
+  };
   
-    return (
-      <Box
-        sx={{
-            background: "linear-gradient(black, #021707, #008037)",
-            pt: 6,
-            pb: 5,
-            minHeight: "100vh",
-        }}
-      >
+  return (
+    <Box
+      sx={{
+          background: "linear-gradient(black, #021707, #008037)",
+          pt: 6,
+          pb: 5,
+          minHeight: "100vh",
+      }}
+    >
         
         {success && (
           <Snackbar
@@ -97,11 +97,10 @@ const onClose = (e) => {
                 boxShadow: 3,
             }}
           >
-          
             <Typography variant="h3" sx={{ fontWeight: "bold", color: "#021707", textAlign: "center" }}>
               SIGN UP
-            </Typography> <br/>
-  
+            </Typography>
+            <br/>
             <FormControl fullWidth>
               <form onSubmit={onSubmit}>
               <StyledTextField
@@ -178,5 +177,4 @@ const onClose = (e) => {
     );
   };
   
-  //export { LoginUser };
 export default LoginUser;

@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
     Box, 
-    CardActions, 
     Container,
     Dialog,
     FormControl,
@@ -19,23 +18,17 @@ import {
 import {GetAllAlbum} from "../../redux/slices/AlbumSlice";
 import {GetAllArtist} from "../../redux/slices/ArtistSlice";
 
-
 const EditSongTrack = ({data, id}) => {
 const [open, setOpen] = useState(false);
 const handleOpen = () => setOpen(true);
 const handleClose = () => setOpen(false);
-const { loading, track, errors, success } = useSelector((state) => state.track);
-const {album} = useSelector((state) => state.album);
+const {loading, album} = useSelector((state) => state.album);
 const {artist} = useSelector((state) => state.artist);
-
-  
 const dispatch = useDispatch();
   
-  const hrs = ["01", "02", "03", "04", "05","06","07","08","09","10","11", "12", "13", "14", "15","16","17","18","19","20","21", "22", "23"];
-  const mins = ["01", "02", "03", "04", "05","06","07","08","09","10","11", "12", "13", "14", "15","16","17","18","19","20"];
-  const secs = ["01", "02", "03", "04", "05","06","07","08","09","10","11", "12", "13", "14", "15","16","17","18","19","20","21", "22", "23", "24", "25","26","27","28","29","30","31", "32", "33", "34", "35","36","37","38","39","40","41", "42", "43", "44", "45","46","47","48","49","50","51", "52", "53", "54", "55","56","57","58","59"];
-  
-  const genre = ["Pop", "Country", "R&B", "Rock", "Folk", "Jazz", "Hip-Hop/Rap", "Classical", "Techno", "EDM", "Metal", "Indie", "K-pop", "Reggae", "A capella", "Gospel"];
+  const mins = ["00","01", "02", "03", "04", "05","06","07","08","09","10","11", "12", "13", "14", "15","16","17","18","19","20"];
+  const secs = ["00","01", "02", "03", "04", "05","06","07","08","09","10","11", "12", "13", "14", "15","16","17","18","19","20","21", "22", "23", "24", "25","26","27","28","29","30","31", "32", "33", "34", "35","36","37","38","39","40","41", "42", "43", "44", "45","46","47","48","49","50","51", "52", "53", "54", "55","56","57","58","59"];
+  const genre = ["Alternative", "Acoustic","Pop", "Country", "R&B", "Rock", "Folk", "Jazz", "Hip-Hop/Rap", "Classical", "Techno", "EDM", "Metal", "Indie", "J-pop","K-pop", "Reggae", "A capella", "Gospel", "Lo-fi"];
   
   const [values, setvalues] = useState({
     album: data.album[0]._id,
@@ -184,8 +177,8 @@ const dispatch = useDispatch();
             </FormControl>
         </Grid>  
 
-            <Grid item xs={12} sm={6} md={6}>
-                <Grid>
+        <Grid item xs={12} sm={6} md={6}>
+            <Grid>
                 <FormControl
                     required
                     fullWidth
@@ -204,35 +197,35 @@ const dispatch = useDispatch();
                     ))} 
                     </Select>
                 </FormControl>
-                </Grid>
-                <Grid>
-                <FormControl
-                    required
-                    fullWidth
-                    size="small"
-                    sx={{ backgroundColor: "white" }}
-                >
-                    <InputLabel>Seconds</InputLabel>
-                    <Select
+            </Grid>
+        <Grid>
+            <FormControl
+                required
+                fullWidth
+                size="small"
+                sx={{ backgroundColor: "white" }}
+            >
+            <InputLabel>Seconds</InputLabel>
+                <Select
                     name="seconds"
                     id="seconds"
                     onChange={handleChange}
                     value={values.seconds}
-                    >
-                        {secs.map(info => (
-                    <MenuItem value={info}>{info}</MenuItem>
-                    ))} 
-                    </Select>
-                </FormControl>
-                </Grid>
-            </Grid>
+                >
+                    {secs.map(info => (
+                <MenuItem value={info}>{info}</MenuItem>
+                ))} 
+                </Select>
+            </FormControl>
+        </Grid>
+    </Grid>
  </Grid>
-                <Box
-                    sx={{
-                        display: "flex",
-                        flexDirection: "column",
-                        backgroundColor: "white",
-                        alignItems: "center",
+            <Box
+                sx={{
+                    display: "flex",
+                    flexDirection: "column",
+                    backgroundColor: "white",
+                    alignItems: "center",
                     }}
                 ><br />
                     <StyledButton

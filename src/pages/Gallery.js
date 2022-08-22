@@ -32,9 +32,9 @@ const [expanded, setExpanded] = useState(false);
     setExpanded(!expanded);
   };
 
-  const [expanda, setAlbumExpanded] = useState(false);
+  const [expandalbum, setAlbumExpanded] = useState(false);
   const handleExpandAlbum = () => {
-    setAlbumExpanded(!expanda);
+    setAlbumExpanded(!expandalbum);
   };
 
   useEffect(() => {
@@ -209,35 +209,44 @@ return (
                 }}
               >
                 <CardActionArea>
-                    <CardMedia
+                  <CardMedia
                       sx={{
                         pt: "100%",
                       }}
                       image={alb.image && Array.isArray(alb.image) ? alb.image.length > 0 ? alb.image[0].url : "https://via.placeholder.com/400/008307?text=Image+Placeholder" : null}
-                      
                     />
                   <ExpandAlbum
-                    expand={expanda}
+                    expand={expandalbum}
                     onClick={handleExpandAlbum}
-                    aria-expanded={expanda}
+                    aria-expanded={expandalbum}
                     aria-label="show more"
                   >
                     <span class="material-icons">expand_more</span>
-                    <Typography variant="h6" sx={{textAlign: "center", mt:1, color: "#008037", transform: !expanda ? 'rotate(0deg)' : 'rotate(180deg)',}}>{alb.album_name}</Typography>
-                    
+                    <Typography variant="h6" sx={{textAlign: "center", mt:1, color: "#008037", transform: !expandalbum ? 'rotate(0deg)' : 'rotate(180deg)',}}>{alb.album_name}</Typography>
                   </ExpandAlbum>
-            <Collapse in={expanda} timeout="auto" unmountOnExit>
-            <CardContent sx={{ flexGrow: 1}}>
-                <Grid item xs={12}>
-                <Typography variant="h6" sx={{ textAlign: "center", mt: 2, color: "#a6a6a6", fontSize: "15px" }}>Duration:</Typography>
-                <Typography variant="h6" sx={{ textAlign: "center" }}>{moment(alb.duration).format("HH:mm:ss")}</Typography>
-                <Typography variant="h6" sx={{ textAlign: "center", mt: 2, color: "#a6a6a6", fontSize: "15px" }}>Date Released:</Typography>
-                <Typography variant="h6" sx={{ textAlign: "center" }}>{moment(alb.date_released).format("MMMM DD, YYYY")}</Typography>
-              </Grid>
-              </CardContent>
-            </Collapse>
-               
-                </CardActionArea>
+                <Collapse in={expandalbum} timeout="auto" unmountOnExit>
+                  <CardContent sx={{ flexGrow: 1}}>
+                    <Grid item xs={12}>
+                      <Typography variant="h6" sx={{ textAlign: "center", mt: 1, color: "#a6a6a6", fontSize: "15px" }}>Duration:</Typography>
+                      <Typography variant="h6" sx={{ textAlign: "center" }}>{moment(alb.duration).format("HH:mm:ss")}</Typography>
+                      <Typography variant="h6" sx={{ textAlign: "center", mt: 1, color: "#a6a6a6", fontSize: "15px" }}>Date Released:</Typography>
+                      <Typography variant="h6" sx={{ textAlign: "center" }}>{moment(alb.date_released).format("MMMM DD, YYYY")}</Typography>
+                      <Typography variant="h6" sx={{ textAlign: "center", mt: 1, color: "#a6a6a6", fontSize: "15px" }}>Producer:</Typography>
+                      <Typography variant="h6" sx={{ textAlign: "center" }}>{alb.producer[0].producer_name}</Typography>
+                    </Grid>
+                  </CardContent>
+                </Collapse>
+              </CardActionArea>
+                <StyledRating
+                  name="customized-color"
+                  defaultValue={0}
+                  max={1}
+                  getLabelText={(value) => `${value} Heart${value !== 1 ? "s" : ""}`}
+                  precision={1}
+                  size="small"
+                  icon={<FavoriteIcon fontSize="inherit" />}
+                  emptyIcon={<FavoriteBorderIcon fontSize="inherit" />}
+                />
               </Card>
             </Grid>
           ))}

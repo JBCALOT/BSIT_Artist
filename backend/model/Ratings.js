@@ -8,7 +8,7 @@ user: {
 },
 type: {
     type: String,
-    required: [true, "What type of report?"],
+    required: true,
     enum: {
       values: ["Album", "Artist", "Track"],
     },

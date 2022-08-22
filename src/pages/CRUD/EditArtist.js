@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch} from "react-redux";
 import {
     Box, 
     Container,
@@ -17,10 +17,10 @@ import { EditButton, StyledButton, StyledTextField } from "../../assets/styles";
 import { 
   EditArtist,
  } from "../../redux/slices/ArtistSlice";
- import DateAdapterMoment from "@mui/lab/AdapterMoment";
- import LocalizationProvider from "@mui/lab/LocalizationProvider";
- import DatePicker from "@mui/lab/DatePicker";
- import moment from "moment";
+import DateAdapterMoment from "@mui/lab/AdapterMoment";
+import LocalizationProvider from "@mui/lab/LocalizationProvider";
+import DatePicker from "@mui/lab/DatePicker";
+import moment from "moment";
 
 const EditArt = ({data, id}) => {
   const [imagePreview, setimagePreview] = useState(data.image);
@@ -29,9 +29,6 @@ const EditArt = ({data, id}) => {
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
-  const { loading, artist, errors, success } = useSelector(
-    (state) => state.artist
-  );
   const dispatch = useDispatch();
 
 const [values, setvalues] = useState({
@@ -82,9 +79,7 @@ const handleSubmit = (e) => {
 }; 
 
 return(
-
     <><EditButton onClick={handleOpen} startIcon={<span class="material-icons">edit</span>}></EditButton>
-     
      <Dialog open={open} onClose={handleClose} maxWidth="md">
         <Box
           sx={{

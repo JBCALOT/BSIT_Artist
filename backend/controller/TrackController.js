@@ -6,25 +6,7 @@ const mongoose = require("mongoose");
 //Create Track
 exports.store = catchAsyncErrors(async (req, res, next) => {
 await Track.create(req.body);
-   /* const track =await Track.aggregate([
-      {
-        $lookup: {
-          from: "albums", //saang table/collection yung ijojoin
-          localField: "album", //field kung saan nakalagay yung foreign key
-          foreignField: "_id", //foreign id
-          as: "album", // anong field sa result ilalagay yung data.
-        },
-      },
-      {
-        $match: {
-          album: mongoose.Types.ObjectId(req.body.album),
-        },
-      },  
-    ]);
-    res.status(200).json({
-      success: "Song Track Created!",
-      track,
-    }); */
+   
 const status = {
   message: "Track Added",
   success: true,
@@ -53,7 +35,8 @@ exports.getAll = catchAsyncErrors(async (req, res, next) => {
               as: "artist",
             },
           }, 
-      ]);    
+      ]);
+
       const longtrack = await Track.findOne({}).sort({
         duration : -1
       }); 
@@ -100,7 +83,7 @@ exports.getAll = catchAsyncErrors(async (req, res, next) => {
   });
 
 //Delete
-exports.dlt = catchAsyncErrors(async (req, res, next) => {
+exports.dlt = catchAsyncErrors(async (req, res) => {
     const track = await Track.findById(req.params.id);
     await track.remove();
     return res.status(200).json({

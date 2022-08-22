@@ -9,11 +9,11 @@ const userSchema = mongoose.Schema({
     type: String,
     required: [true, "Please provide your email Address"],
     //validate: [validator.isEmail, "Please Enter a valid Email Address"],
-    unique: true,
+    unique: [true, "This email is already registered. You cannot use this"],
   },
   username: {
     type: String,
-    required: [true, "Please Provide a username"],
+    required: [true, "Please provide a username"],
     unique:
       "The username already belongs to another account. You cannot use this",
   },
@@ -27,7 +27,6 @@ const userSchema = mongoose.Schema({
     type: Date,
     default: Date.now,
   },
-  
   resetPasswordToken: String,
   resetPasswordExpire: Date,
 });
@@ -40,15 +39,9 @@ userSchema.pre("save", async function (next) {
   if (!this.isModified("password")) {
     next();
   }
-
   const salt = await bcrypt.genSalt(10);
   this.password = await bcrypt.hash(this.password, salt);
 });
-
-/* userSchema.path("phone_number").validate(function (value) {
-  const regex = /^(09|\+639)\d{9}$/gm;
-  return regex.test(value);
-}, "Phone number is Invalid"); */
 
 // Compare user password
 userSchema.methods.matchPasswords = async function (enteredPassword) {

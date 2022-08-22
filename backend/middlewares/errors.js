@@ -9,27 +9,15 @@ const destroy = async (image) => {
     console.log(error);
   }
 };
+
 module.exports = (err, req, res, next) => {
   console.log(req.body);
   err.statusCode = err.statusCode || 500;
-
-  // if (process.env.NODE_ENV === "DEVELOPMENT") {
-  //   console.log(err);
-
-  //   res.status(err.statusCode).json({
-  //     success: false,
-  //     error: err,
-  //     errMessage: err.message,
-  //     stack: err.stack,
-  //   });
-  // }
-
-  // if (process.env.NODE_ENV === "PRODUCTION") {
   let error = { ...err };
 
   error.message = err.message;
-  if (req.body.images) {
-    destroy(req.body.images[0].public_id);
+  if (req.body.image) {
+    destroy(req.body.image[0].public_id);
   }
 
   // Wrong Mongoose Object ID Error
@@ -69,5 +57,4 @@ module.exports = (err, req, res, next) => {
     success: false,
     message: error.message || "Internal Server Error",
   });
-  // }
 };

@@ -4,12 +4,12 @@ import CssBaseline from "@mui/material/CssBaseline";
 import {
   Alert,
   AlertTitle,
-    Box, 
-    Container,
-    Dialog,
-    Grid,
-    Snackbar,
-    Typography,
+  Box, 
+  Container,
+  Dialog,
+  Grid,
+  Snackbar,
+  Typography,
 } from "@mui/material";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import { StyledButton, StyledTextField } from "../assets/styles";
@@ -21,7 +21,7 @@ import Delete from "./CRUD/Delete";
 import Appbar from "../assets/Appbar";
 
 const Producer = () => {
-
+const dispatch = useDispatch();
   useEffect(() => {
     document.title = "BSIT | Producers";
     return () => {};
@@ -37,8 +37,7 @@ const Producer = () => {
   const { loading, producer, errors, success } = useSelector(
     (state) => state.producer
   );
-  const dispatch = useDispatch();
-
+  
   const onClose = (e) => {
     dispatch(clearSuccess());
     dispatch(clearError());
@@ -129,28 +128,27 @@ useEffect(() => {
 }, [dispatch]);
 
 return(
-<Box  sx={{
-        background: "linear-gradient(black, #021707, #008037)",
-        pt: 5,
-        pb: 5,
-        minHeight: "100vh",
-      }}>
-
+<Box sx={{
+      background: "linear-gradient(black, #021707, #008037)",
+      pt: 5,
+      pb: 5,
+      minHeight: "100vh",
+    }}>
 <CssBaseline />
 
 {success && (
-          <Snackbar
-            open={success}
-            autoHideDuration={3000}
-            onClose={onClose}
-            name="sucess"
-          >
-            <Alert severity="success" variant="filled">
-              <AlertTitle>Success</AlertTitle>
-              {success}
-            </Alert>
-          </Snackbar>
-        )}
+      <Snackbar
+        open={success}
+        autoHideDuration={3000}
+        onClose={onClose}
+        name="sucess"
+      >
+        <Alert severity="success" variant="filled">
+          <AlertTitle>Success</AlertTitle>
+          {success}
+        </Alert>
+      </Snackbar>
+      )}
   
         {errors && (
           <Snackbar
@@ -167,8 +165,8 @@ return(
           )}
 
     <Container maxWidth="xl">
-    <Appbar/><br/>
-          <Typography
+      <Appbar/><br/>
+        <Typography
           variant="h3"
           sx={{ textTransform: "capitalize", color: "white" }}
           align="center"
@@ -223,7 +221,7 @@ return(
           </Box>
         </Grid>
 
-        <Dialog open={open} onClose={handleClose} maxWidth="md">
+      <Dialog open={open} onClose={handleClose} maxWidth="md">
         <Box
           sx={{
             display: "flex",
@@ -308,6 +306,5 @@ return(
 </Box>
 );
 };
-
 
 export default Producer;

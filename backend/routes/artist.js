@@ -1,7 +1,6 @@
 const express = require("express");
 const router = express.Router();
 const { authenthicationCheck } = require("../middlewares/auth");
-
 const {
     store,
     update,

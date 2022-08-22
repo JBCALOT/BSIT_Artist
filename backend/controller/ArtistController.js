@@ -43,8 +43,7 @@ exports.store = catchAsyncErrors(async (req, res, next) => {
   let artist;
    artist = await Artist.create(req.body);
     return res.status(200).json({
-      success: true,
-      message: "Artist has been successfully Added",
+      success: `Artist successfully Added`,
       artist,
     });
   });
@@ -58,7 +57,7 @@ exports.getAll = catchAsyncErrors(async (req, res, next) => {
     });
   });
 
-  //Get All artist for guest
+//Get All artist for guest
 exports.getAllGuest = catchAsyncErrors(async (req, res) => {
   const artist = await Artist.find();
   return res.status(200).json({
@@ -70,7 +69,7 @@ exports.getAllGuest = catchAsyncErrors(async (req, res) => {
 //Edit
 exports.update = catchAsyncErrors(async (req, res, next) => {
   req.body.updated_at = Date.now();
-  let image = [];
+  //let image = [];
   let artist;
   /* if (req.body.from === "android") {
     //console.log(artist);
@@ -139,9 +138,8 @@ let imageLinks = [];
       new: true,
       runValidators: true,
     });
-    //artist = await Artist.find();
     return res.status(200).json({
-      success: "Artist updated!",
+      success: `Artist updated!`,
       artist,
     });
   });
@@ -156,7 +154,7 @@ exports.dlt = catchAsyncErrors(async (req, res, next) => {
     });
   });
 
-  //Artist Details
+//Artist Details
 exports.getDetails = catchAsyncErrors(async (req, res, next) => {
   const artist = await Artist.findById(req.params.id);
   return res.status(200).json({

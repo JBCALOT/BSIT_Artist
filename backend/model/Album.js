@@ -13,7 +13,7 @@ const albumSchema = mongoose.Schema({
     artist: {
         type: mongoose.Schema.ObjectId,
         ref: "Artist",
-        required: [true, "Please Enter Artist name"],
+        required: [true, "Please Enter Artist Name"],
       },
     duration: {
         hours:{

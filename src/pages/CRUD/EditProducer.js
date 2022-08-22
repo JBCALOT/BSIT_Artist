@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import {
     Box, 
     Container,
@@ -16,9 +16,6 @@ const EditProd = ({data, id}) => {
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
-  const { loading, producer, errors, success } = useSelector(
-    (state) => state.producer
-  );
   const dispatch = useDispatch();
 
 const [values, setvalues] = useState({
